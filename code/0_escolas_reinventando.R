@@ -2,6 +2,10 @@ library(basedosdados)
 library(tidyverse)
 
 set_billing_id("humancapitalindex")
+
+# pasta output: funciona rodando de code/ ou da raiz do projeto
+dir_output <- if (dir.exists("../output")) "../output" else "output"
+
 censo <- read_sql("
   SELECT
     *
@@ -53,7 +57,18 @@ id_escolas_2013_5 <- c(
   "31069973"
 )
 
+# anexo I de 2012 (reinventando_em/escolas_2012.png): 11 escolas da SRE
+# Metropolitana C, Belo Horizonte. 31002500 = E. E. Maria Luiza Miranda Bastos,
+# que esta no anexo mas faltava na lista de codigos
 id_escolas_2012 <- c(
-  "002526", "002488", "002551", "002241", "000418",
-  "002305", "000353", "000205", "002348", "002445"
+  "31002526", "31002488", "31002551", "31002241", "31000418",
+  "31002305", "31000353", "31000205", "31002348", "31002445",
+  "31002500"
 )
+
+# todas as escolas do piloto (2012 e 2013), sem repeticao
+id_escolas_reinventando <- unique(c(id_escolas_2012, id_escolas2013, id_escolas2013_2,
+                                    id_escolas_2013_3, id_escolas_2013_4, id_escolas_2013_5))
+length(id_escolas_reinventando)
+
+saveRDS(id_escolas_reinventando, file.path(dir_output, "id_escolas_reinventando.rds"))

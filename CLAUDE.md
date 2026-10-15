@@ -21,12 +21,12 @@ The paper is at an early stage. Current work: **choosing the source of variation
   - [04_desenho_a_rct.R](code/04_desenho_a_rct.R): counts eligible cells for design (a) → `rct_elegibilidade.xlsx`.
   - [05_desenho_b_twfe.R](code/05_desenho_b_twfe.R): switchers for design (b) → `twfe_viabilidade.xlsx`.
   - [06_horarios_1em_manha.R](code/06_horarios_1em_manha.R), [07_horarios_9ano_manha.R](code/07_horarios_9ano_manha.R): most frequent morning release times by year, 1st-year EM and 9th grade.
-  - [08_horarios_1em_2em.R](code/08_horarios_1em_2em.R): release/start times of 1st- vs 2nd-year EM, morning and afternoon. Runs on all MG state schools, i.e. already on the current sample (its comment still mentions the old sample).
+  - [08_horarios_1em_2em.R](code/08_horarios_1em_2em.R): most frequent release times of 1st-, 2nd- and 3rd-year EM, 2007–2017, all MG state schools (the current sample). Six line graphs, one per grade × shift (morning, afternoon) → `horarios_em_series_{manha,tarde}_{1,2,3}ano.png`, shown in `misc/main.tex`.
   - [09_painel_horarios_1em.R](code/09_painel_horarios_1em.R): school panel 2011–2014 of 1st-year EM morning release and afternoon start → `painel_*.rds`.
   - [10_mudancas_horario_1em.R](code/10_mudancas_horario_1em.R): schools that delayed 1st-year EM release by ≥50 min before 2014 → `id_mudou_50_*.rds`, `tratados_saida_1em_manha.png`.
   - [11_horarios_1em_2em_sem_antecipadas.R](code/11_horarios_1em_2em_sem_antecipadas.R): `08` restricted to the sample, without those early schools.
   - [12_hist_diff_saida_1em.R](code/12_hist_diff_saida_1em.R): per-school difference between 1st-year and 2nd/3rd-year EM release time, 2013–2015.
-  - [13_escolas_reinventando.R](code/13_escolas_reinventando.R): school IDs from the Reinventando o Ensino Médio lists (2013 INEP codes; 2012 codes are 6-digit SEE codes, not INEP). Unfinished.
+  - [0_escolas_reinventando.R](code/0_escolas_reinventando.R): INEP codes of the Reinventando o Ensino Médio pilot schools: 11 in 2012 (SRE Metropolitana C, Belo Horizonte; `reinventando_em/escolas_2012.png`) and 122 in 2013. Saves the 133 together, as one vector, to `output/id_escolas_reinventando.rds`.
 - `output/`: everything the scripts produce (`.rds`, `.xlsx`, `.png`). The .tex reads figures from here (`\graphicspath{{../output/}}`).
 - `reinventando_em/`: source documents on Reinventando o Ensino Médio. `misc/main_papers/`: reference papers.
 

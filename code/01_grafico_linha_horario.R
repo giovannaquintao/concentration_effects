@@ -6,7 +6,7 @@ set_billing_id("humancapitalindex")
 # pasta output: funciona rodando de code/ ou da raiz do projeto
 dir_output <- if (dir.exists("../output")) "../output" else "output"
 
-# 1a e 2a serie do Ensino Medio (regular / integrado / normal-magisterio)
+# 1a, 2a e 3a series do Ensino Medio (regular / integrado / normal-magisterio)
 censo <- read_sql("
   SELECT
     ano, sigla_uf, id_municipio, id_escola, id_turma,
@@ -14,25 +14,26 @@ censo <- read_sql("
   FROM `basedosdados.br_inep_censo_escolar.turma`
   WHERE ano BETWEEN 2007 AND 2017
     AND sigla_uf = 'MG'
-    AND etapa_ensino IN ('25', '30', '35', '26', '31', '36')
+    AND etapa_ensino IN ('25', '30', '35', '26', '31', '36', '27', '32', '37')
     AND rede = 'estadual'
 ")
 
-# so as escolas da amostra salva em 01_amostra.R (amostra_id_escola.rds)
-
+# amostra: todas as escolas estaduais de MG (nao filtra por amostra_id_escola.rds)
 
 # =====================================================================
 # Objetivo: como os horarios de SAIDA mais frequentes das turmas de
-# 1a e de 2a serie do Ensino Medio mudam de um ano para o outro, no turno
-# da manha e no turno da tarde. Um grafico por turno; em cada grafico,
-# um painel por serie, lado a lado.
+# 1a, 2a e 3a series do Ensino Medio mudam de um ano para o outro, no turno
+# da manha e no turno da tarde. Seis graficos de linhas: um por serie em
+# cada turno. Dentro do turno, os tres graficos usam os mesmos horarios,
+# as mesmas cores e o mesmo eixo y, para comparar as series.
 # =====================================================================
 turmas_em <- censo %>%
   mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer)) %>%
   mutate(
     serie = case_when(
       etapa_ensino %in% c("25", "30", "35") ~ "1st year of high school",
-      etapa_ensino %in% c("26", "31", "36") ~ "2nd year of high school"
+      etapa_ensino %in% c("26", "31", "36") ~ "2nd year of high school",
+      etapa_ensino %in% c("27", "32", "37") ~ "3rd year of high school"
     ),
     entrada_min = hora_inicial * 60L + minuto_inicial,
     saida_min   = entrada_min + numero_duracao_turma,
@@ -45,6 +46,11 @@ turmas_em <- censo %>%
     )
   ) %>%
   filter(!is.na(saida_min))
+
+# serie -> sufixo do nome do arquivo
+arquivo_serie <- c("1st year of high school" = "1ano",
+                   "2nd year of high school" = "2ano",
+                   "3rd year of high school" = "3ano")
 
 # minutos depois da meia-noite -> "HH:MM"
 rotulo_hora <- function(m) sprintf("%02d:%02d", m %/% 60, m %% 60)
@@ -62,35 +68,26 @@ tema <- theme_minimal(base_size = 12) +
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.major.y = element_line(colour = "#e1e0d9", linewidth = 0.3),
-    panel.spacing.x    = unit(1.5, "lines"),
     axis.text          = element_text(colour = "#52514e"),
     axis.title         = element_text(colour = "#52514e"),
-    strip.text         = element_text(colour = "#0b0b0b", face = "bold", hjust = 0),
     plot.title         = element_text(colour = "#0b0b0b", face = "bold"),
     plot.subtitle      = element_text(colour = "#52514e"),
     plot.title.position = "plot",
     legend.position    = "right"
   )
 
-# faz as tabelas e os dois graficos de um turno
+# faz a tabela e os tres graficos de linhas (um por serie) de um turno
 #   turno_sel : "manha" ou "tarde"
 #   turno_en  : nome do turno nos titulos (em ingles)
 #   subtitulo : subtitulo dos graficos (em ingles)
-#   hora_var  : "saida_min" (horario de saida) ou "entrada_min" (horario de entrada)
-horarios_turno <- function(turno_sel, turno_en, subtitulo, hora_var = "saida_min") {
-
-  entrada <- hora_var == "entrada_min"
-  hora_en <- if (entrada) "Start time" else "Release time"
-  arquivo <- file.path(dir_output,
-                       paste0("horarios_em2_", turno_sel, if (entrada) "_entrada" else ""))
+horarios_turno <- function(turno_sel, turno_en, subtitulo) {
 
   turmas_turno <- turmas_em %>%
-    filter(turno == turno_sel) %>%
-    mutate(hora_min = .data[[hora_var]])
+    filter(turno == turno_sel)
 
-  # % das turmas do turno em cada horario (de saida ou de entrada), por serie e ano
+  # % das turmas do turno em cada horario de saida, por serie e ano
   freq <- turmas_turno %>%
-    count(serie, ano, hora_min, name = "turmas") %>%
+    count(serie, ano, hora_min = saida_min, name = "turmas") %>%
     group_by(serie, ano) %>%
     mutate(pct = 100 * turmas / sum(turmas)) %>%
     ungroup()
@@ -135,7 +132,7 @@ horarios_turno <- function(turno_sel, turno_en, subtitulo, hora_var = "saida_min
     print()
 
   # -------------------------------------------------------------------
-  # Graficos (textos em ingles)
+  # Graficos (textos em ingles): um grafico de linhas por serie
   # -------------------------------------------------------------------
   rotulos <- rotulo_hora(principais)
   fixos   <- cores_em[intersect(rotulos, names(cores_em))]
@@ -143,70 +140,39 @@ horarios_turno <- function(turno_sel, turno_en, subtitulo, hora_var = "saida_min
   cores_horario <- c(fixos, setNames(setdiff(paleta, fixos)[seq_along(novos)], novos))[rotulos]
   cores_horario <- c(cores_horario, Other = "#898781")
 
-  # 1) linhas: % das turmas em cada horario principal, por ano, uma serie ao lado da outra
-  g_linhas <- ggplot(freq_principais, aes(ano, pct, colour = horario, group = horario)) +
-    geom_line(linewidth = 0.8) +
-    geom_point(size = 2.2) +
-    facet_wrap(~serie, nrow = 1) +
-    scale_colour_manual(values = cores_horario, name = hora_en) +
-    scale_x_continuous(breaks = sort(unique(freq_principais$ano))) +
-    scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(0, 0.05))) +
-    labs(
-      title    = paste0("Most frequent ", tolower(hora_en), "s of high school classes, ", turno_en, " shift"),
-      subtitle = subtitulo,
-      x = NULL, y = "% of classes"
-    ) +
-    tema
+  # mesmo eixo y nas tres series do turno
+  y_max <- max(freq_principais$pct)
 
-  ggsave(paste0(arquivo, "_linhas.png"), g_linhas,
-         width = 14, height = 5.5, dpi = 200)
+  for (s in names(arquivo_serie)) {
+    g_linhas <- ggplot(filter(freq_principais, serie == s),
+                       aes(ano, pct, colour = horario, group = horario)) +
+      geom_line(linewidth = 0.8) +
+      geom_point(size = 2.2) +
+      scale_colour_manual(values = cores_horario, name = "Release time", drop = FALSE) +
+      scale_x_continuous(breaks = sort(unique(freq_principais$ano))) +
+      scale_y_continuous(limits = c(0, y_max), expand = expansion(mult = c(0, 0.05))) +
+      labs(
+        title    = paste0(s, ", ", turno_en, " shift"),
+        subtitle = subtitulo,
+        x = NULL, y = "% of classes"
+      ) +
+      tema
 
-  # 2) mapa de calor: todos os horarios com pelo menos 2% das turmas em alguma serie-ano
-  horarios_mapa <- freq %>%
-    group_by(hora_min) %>%
-    filter(max(pct) >= 2) %>%
-    ungroup() %>%
-    complete(serie, ano, hora_min, fill = list(turmas = 0, pct = 0)) %>%
-    mutate(horario = fct_reorder(rotulo_hora(hora_min), hora_min))
-
-  g_mapa <- ggplot(horarios_mapa, aes(factor(ano), horario, fill = pct)) +
-    geom_tile(colour = "#fcfcfb", linewidth = 1) +
-    # rotulo so nas celulas com 5% ou mais
-    geom_text(
-      data = ~ filter(.x, pct >= 5),
-      aes(label = round(pct), colour = pct >= 35),
-      size = 3.3, show.legend = FALSE
-    ) +
-    facet_wrap(~serie, nrow = 1) +
-    scale_colour_manual(values = c(`FALSE` = "#0b0b0b", `TRUE` = "#ffffff")) +
-    scale_fill_gradient(low = "#eef4fc", high = "#0d366b", name = "% of classes",
-                        limits = c(0, NA)) +
-    labs(
-      title    = paste0(hora_en, " of high school classes, ", turno_en, " shift, by year"),
-      subtitle = subtitulo,
-      x = NULL, y = hora_en
-    ) +
-    tema +
-    theme(panel.grid.major.y = element_blank())
-
-  ggsave(paste0(arquivo, "_mapa.png"), g_mapa,
-         width = 14, height = 6, dpi = 200)
+    ggsave(file.path(dir_output,
+                     paste0("horarios_em_series_", turno_sel, "_", arquivo_serie[[s]], ".png")),
+           g_linhas, width = 9, height = 3.6, dpi = 200)
+  }
 
   writexl::write_xlsx(
     list(principais = freq_principais,
          todos = freq %>% mutate(horario = rotulo_hora(hora_min))),
-    paste0(arquivo, ".xlsx")
+    file.path(dir_output, paste0("horarios_em_series_", turno_sel, ".xlsx"))
   )
 
   invisible(freq)
 }
 
 horarios_turno("manha", "morning",
-               "% of classes starting before 12:00, state schools in Minas Gerais")
+               "Release time, % of classes starting before 12:00, state schools in Minas Gerais")
 horarios_turno("tarde", "afternoon",
-               "% of classes starting between 12:00 and 14:00, state schools in Minas Gerais")
-
-# turno da tarde, pelo horario de ENTRADA
-horarios_turno("tarde", "afternoon",
-               "% of classes starting between 12:00 and 14:00, state schools in Minas Gerais",
-               hora_var = "entrada_min")
+               "Release time, % of classes starting between 12:00 and 14:00, state schools in Minas Gerais")
