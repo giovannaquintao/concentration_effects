@@ -27,6 +27,7 @@ The paper is at an early stage. Current work: **choosing the source of variation
   - [11_horarios_1em_2em_sem_antecipadas.R](code/11_horarios_1em_2em_sem_antecipadas.R): `08` restricted to the sample, without those early schools.
   - [12_hist_diff_saida_1em.R](code/12_hist_diff_saida_1em.R): per-school difference between 1st-year and 2nd/3rd-year EM release time, 2013–2015.
   - [0_escolas_reinventando.R](code/0_escolas_reinventando.R): INEP codes of the Reinventando o Ensino Médio pilot schools: 11 in 2012 (SRE Metropolitana C, Belo Horizonte; `reinventando_em/escolas_2012.png`) and 122 in 2013. Saves the 133 together, as one vector, to `output/id_escolas_reinventando.rds`.
+  - [13_tabela_escolas_2013.R](code/13_tabela_escolas_2013.R): descriptive table of MG state schools with EM in 2013, sample = without the pilot schools → `tabela_escolas_2013.xlsx`.
 - `output/`: everything the scripts produce (`.rds`, `.xlsx`, `.png`). The .tex reads figures from here (`\graphicspath{{../output/}}`).
 - `reinventando_em/`: source documents on Reinventando o Ensino Médio. `misc/main_papers/`: reference papers.
 
