@@ -21,30 +21,27 @@ censo <- read_sql("
 # escolas do piloto do Reinventando (2012 e 2013), salvas em 0_escolas_reinventando.R
 id_escolas_reinventando <- readRDS(file.path(dir_output, "id_escolas_reinventando.rds"))
 
-# aumento minimo (em minutos) da duracao da 1a serie de 2013 para 2014:
-# limiar principal e um mais frouxo
-limiar_min  <- 50
-limiar2_min <- 40
+# aumento minimo (em minutos) da duracao e da saida da 1a serie de 2013 para 2014
+limiar_min <- 40
 
 # diferenca maxima (em minutos) para dizer que a 1a serie sai junto com a 2a e a 3a
 janela_min <- 5
 
 # =====================================================================
-# Objetivo: tabela descritiva das escolas estaduais de MG com Ensino
+# Objetivo: tabelas descritivas das escolas estaduais de MG com Ensino
 # Medio em 2013.
-#   - todas as escolas estaduais com turma de 1a, 2a ou 3a serie do EM
-#   - amostra: as mesmas, sem as escolas do piloto
-# So na amostra (% em relacao a amostra):
-#   - duracao da turma de 1a serie subiu 50 min ou mais (e 40 min ou mais)
-#     de 2013 para 2014, em pelo menos um turno da escola
-#   - duracao da turma de 1a serie nao mudou em nenhum turno da escola
-#   - escola com turma de EM de manha e de tarde
-#   - mais de um horario de saida dentro da mesma serie e turno
-#     (so manha e tarde; o noturno fica de fora)
-#   - numero medio de turmas por serie (media entre escola x serie)
-# Segunda tabela, tambem so na amostra: em 2013, 2014 e 2015, quantas
-# escolas soltam a 1a serie junto (ate 5 min) com a 2a e a 3a series.
-# As duas tabelas vao para output/ em .xlsx e em .tex (main.tex le o .tex).
+# Tabela 1: da lista de escolas a amostra, com exclusoes em sequencia:
+#   1. todas as escolas estaduais com turma de 1a, 2a ou 3a serie do EM
+#   2. menos as escolas do piloto do Reinventando
+#   3. menos as escolas com turma de EM a tarde
+#   4. menos as escolas com mais de um horario de saida dentro da mesma
+#      serie, no turno da manha
+#   amostra = 1 - 2 - 3 - 4 (pode ter turmas no noturno)
+# Tabela de turnos: escolas fora do piloto pelos turnos das turmas de EM.
+# Tabela de saida junto: em 2013, 2014 e 2015, quantas escolas da amostra
+# soltam a 1a serie junto (ate 5 min) com a 2a e a 3a series.
+# Tabela de tratadas e controles: criterios (i)-(iii) na amostra.
+# As tabelas vao para output/ em .xlsx e em .tex (main.tex le o .tex).
 # =====================================================================
 turmas <- censo %>%
   mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer)) %>%
@@ -56,7 +53,7 @@ turmas <- censo %>%
     ),
     entrada_min = hora_inicial * 60L + minuto_inicial,
     saida_min   = entrada_min + numero_duracao_turma,
-    # mesmos turnos de 01_grafico_linha_horario.R: manha = entrada antes das 12:00;
+    # mesmos turnos de 2_grafico_linha_horario.R: manha = entrada antes das 12:00;
     # tarde = entrada entre 12:00 e 14:00
     turno = case_when(
       hora_inicial < 12      ~ "manha",
@@ -67,95 +64,88 @@ turmas <- censo %>%
 
 turmas_2013 <- turmas %>% filter(ano == 2013)
 
-escolas_mg      <- unique(turmas_2013$id_escola)
-escolas_amostra <- setdiff(escolas_mg, id_escolas_reinventando)
-n_amostra       <- length(escolas_amostra)
-turmas_amostra  <- turmas_2013 %>% filter(id_escola %in% escolas_amostra)
-
-cat("escolas do piloto com turma de EM em 2013:",
-    length(intersect(escolas_mg, id_escolas_reinventando)), "\n")
-
 # -------------------------------------------------------------------
-# duracao da 1a serie: 2013 -> 2014, por escola x turno
+# amostra: exclusoes em sequencia (cada passo so entre as que sobraram)
 # -------------------------------------------------------------------
-duracao_1a <- turmas %>%
-  filter(serie == "1a", ano %in% c(2013, 2014), id_escola %in% escolas_amostra,
-         !is.na(numero_duracao_turma)) %>%
-  group_by(id_escola, turno, ano) %>%
-  summarise(duracao_media = mean(numero_duracao_turma), .groups = "drop") %>%
-  pivot_wider(names_from = ano, values_from = duracao_media, names_prefix = "duracao_") %>%
-  # so turnos com turma de 1a serie nos dois anos
-  filter(!is.na(duracao_2013), !is.na(duracao_2014)) %>%
-  mutate(aumento = duracao_2014 - duracao_2013)
+escolas_mg <- unique(turmas_2013$id_escola)
 
-mudou_duracao <- duracao_1a %>%
-  group_by(id_escola) %>%
-  summarise(mudou     = any(aumento >= limiar_min),
-            mudou2    = any(aumento >= limiar2_min),
-            # nao muda = duracao media igual em todos os turnos com 1a serie nos dois anos
-            nao_mudou = all(aumento == 0),
-            .groups = "drop")
-n_mudou     <- sum(mudou_duracao$mudou)
-n_mudou2    <- sum(mudou_duracao$mudou2)
-n_nao_mudou <- sum(mudou_duracao$nao_mudou)
+escolas_piloto     <- intersect(escolas_mg, id_escolas_reinventando)
+escolas_sem_piloto <- setdiff(escolas_mg, escolas_piloto)
 
-cat("escolas da amostra com turma de 1a serie no mesmo turno em 2013 e 2014:",
-    nrow(mudou_duracao), "\n")
+escolas_tarde <- turmas_2013 %>%
+  filter(id_escola %in% escolas_sem_piloto, turno == "tarde") %>%
+  distinct(id_escola) %>%
+  pull(id_escola)
+escolas_sem_tarde <- setdiff(escolas_sem_piloto, escolas_tarde)
 
-# -------------------------------------------------------------------
-# turnos de manha e de tarde
-# -------------------------------------------------------------------
-turnos_escola <- turmas_amostra %>%
-  group_by(id_escola) %>%
-  summarise(manha = any(turno == "manha"), tarde = any(turno == "tarde"), .groups = "drop")
-n_manha_tarde <- sum(turnos_escola$manha & turnos_escola$tarde)
-
-# -------------------------------------------------------------------
-# mais de um horario de saida dentro da mesma serie e turno
-# -------------------------------------------------------------------
-saidas_escola <- turmas_amostra %>%
-  filter(turno %in% c("manha", "tarde"), !is.na(saida_min)) %>%
-  group_by(id_escola, serie, turno) %>%
+escolas_saida_diferente <- turmas_2013 %>%
+  filter(id_escola %in% escolas_sem_tarde, turno == "manha", !is.na(saida_min)) %>%
+  group_by(id_escola, serie) %>%
   summarise(n_saidas = n_distinct(saida_min), .groups = "drop") %>%
-  group_by(id_escola) %>%
-  summarise(saida_diferente = any(n_saidas > 1), .groups = "drop")
-n_saida_diferente <- sum(saidas_escola$saida_diferente)
+  filter(n_saidas > 1) %>%
+  distinct(id_escola) %>%
+  pull(id_escola)
 
-# -------------------------------------------------------------------
-# numero de turmas por serie
-# -------------------------------------------------------------------
-turmas_serie <- turmas_amostra %>% count(id_escola, serie, name = "turmas")
-media_turmas <- mean(turmas_serie$turmas)
+escolas_amostra <- setdiff(escolas_sem_tarde, escolas_saida_diferente)
+n_amostra       <- length(escolas_amostra)
 
-# media por serie, so no console
-turmas_serie %>%
-  group_by(serie) %>%
-  summarise(escolas = n(), media_turmas = round(mean(turmas), 2), .groups = "drop") %>%
-  print()
-
-# -------------------------------------------------------------------
-# tabela
-# -------------------------------------------------------------------
+pct_todas   <- function(n) round(100 * n / length(escolas_mg), 1)
 pct_amostra <- function(n) round(100 * n / n_amostra, 1)
 
+# -------------------------------------------------------------------
+# tabela 1: da lista de escolas a amostra (% em relacao a todas)
+# -------------------------------------------------------------------
 tabela <- tibble(
   `State schools with high school, 2013` = c(
-    "All, Minas Gerais",
-    "Sample (excluding pilot schools)",
-    paste0("1st-year class duration up ", limiar_min, "+ min in 2014"),
-    paste0("1st-year class duration up ", limiar2_min, "+ min in 2014"),
-    "1st-year class duration unchanged in 2014",
-    "Morning and afternoon shifts",
-    "Different release times within grade and shift",
-    "Average classes per grade"
+    "1. All schools",
+    "2. Pilot schools",
+    "3. Schools with afternoon EM classes",
+    "4. Schools with different release times within grade",
+    "Sample (1 - 2 - 3 - 4)"
   ),
-  N   = c(length(escolas_mg), n_amostra, n_mudou, n_mudou2, n_nao_mudou,
-          n_manha_tarde, n_saida_diferente, round(media_turmas, 1)),
-  `%` = c(NA, 100, pct_amostra(n_mudou), pct_amostra(n_mudou2), pct_amostra(n_nao_mudou),
-          pct_amostra(n_manha_tarde), pct_amostra(n_saida_diferente), NA)
+  N   = c(length(escolas_mg), length(escolas_piloto), length(escolas_tarde),
+          length(escolas_saida_diferente), n_amostra),
+  `%` = pct_todas(N)
 )
 
 print(tabela, width = Inf)
+
+# -------------------------------------------------------------------
+# tabela de turnos: escolas fora do piloto pelos turnos das turmas de EM, 2013
+#   so manha: tem turma de manha e nenhuma de tarde (pode ter noturno)
+#   so tarde: tem turma de tarde e nenhuma de manha (pode ter noturno)
+#   manha e tarde: tem turma nos dois turnos
+#   sem manha e sem tarde: so noturno (entrada depois das 14:00) ou sem horario
+# -------------------------------------------------------------------
+turnos_2013 <- turmas_2013 %>%
+  filter(id_escola %in% escolas_sem_piloto) %>%
+  group_by(id_escola) %>%
+  summarise(manha = any(turno == "manha"),
+            tarde = any(turno == "tarde"),
+            noite = any(turno == "outro" & !is.na(entrada_min)),
+            .groups = "drop") %>%
+  mutate(grupo = case_when(
+    manha & !tarde ~ "Only morning",
+    tarde & !manha ~ "Only afternoon",
+    manha & tarde  ~ "Morning and afternoon",
+    TRUE           ~ "Neither (night only or no time)"
+  ))
+
+ordem_grupos <- c("Only morning", "Only afternoon", "Morning and afternoon",
+                  "Neither (night only or no time)")
+
+tabela_turnos <- turnos_2013 %>%
+  group_by(grupo) %>%
+  summarise(N = n(), noite = sum(noite), .groups = "drop") %>%
+  arrange(match(grupo, ordem_grupos)) %>%
+  bind_rows(tibble(grupo = "Non-pilot schools", N = length(escolas_sem_piloto),
+                   noite = sum(turnos_2013$noite)), .) %>%
+  transmute(`Non-pilot schools by EM shift, 2013` = grupo,
+            N,
+            `%` = round(100 * N / length(escolas_sem_piloto), 1),
+            `Also night EM` = noite)
+
+print(tabela_turnos, width = Inf)
 
 # -------------------------------------------------------------------
 # tabela 2: 1a serie sai junto (ate 5 min) com a 2a e a 3a, 2013-2015
@@ -188,11 +178,81 @@ tabela_junto <- saida_junto %>%
 
 print(tabela_junto, width = Inf)
 
-writexl::write_xlsx(list(escolas_2013 = tabela, saida_junto = tabela_junto),
+# -------------------------------------------------------------------
+# tabela de tratadas e controles
+# Amostra da tabela 1. Os criterios usam so as turmas da manha. Base:
+# escolas com turma de 1a, 2a e 3a series de manha em 2013 e em 2014.
+# Horarios = media das turmas da serie na escola.
+#   (i)   2013: a 1a serie sai ate 5 min da 2a e ate 5 min da 3a
+#   (ii)  2014: a 1a serie sai 40+ min depois da 2a e da 3a, e a duracao
+#         da 1a serie subiu 40+ min de 2013 para 2014
+#   (iii) 2a e 3a series: mesma entrada e mesma duracao em 2013 e 2014
+#   tratada:  (i), (ii) e (iii)
+#   controle: (i) e (iii), e em 2014 a 1a serie ainda sai ate 5 min da 2a e da 3a
+# % em relacao a amostra
+# -------------------------------------------------------------------
+# entrada, duracao e saida medias por escola x ano x serie, so turmas da manha
+por_serie <- turmas %>%
+  filter(ano %in% c(2013, 2014), id_escola %in% escolas_amostra, turno == "manha") %>%
+  group_by(id_escola, ano, serie) %>%
+  summarise(entrada = mean(entrada_min), duracao = mean(numero_duracao_turma),
+            saida = mean(saida_min), .groups = "drop")
+
+# base: escolas com as tres series de manha nos dois anos (3 series x 2 anos = 6 linhas)
+escolas_base <- por_serie %>% count(id_escola) %>% filter(n == 6) %>% pull(id_escola)
+
+criterios <- por_serie %>%
+  filter(id_escola %in% escolas_base) %>%
+  pivot_wider(names_from = c(serie, ano), values_from = c(entrada, duracao, saida)) %>%
+  mutate(
+    c1 = abs(saida_1a_2013 - saida_2a_2013) <= janela_min &
+         abs(saida_1a_2013 - saida_3a_2013) <= janela_min,
+    c2 = pmin(saida_1a_2014 - saida_2a_2014, saida_1a_2014 - saida_3a_2014) >= limiar_min &
+         duracao_1a_2014 - duracao_1a_2013 >= limiar_min,
+    c3 = abs(entrada_2a_2014 - entrada_2a_2013) < 1 & abs(duracao_2a_2014 - duracao_2a_2013) < 1 &
+         abs(entrada_3a_2014 - entrada_3a_2013) < 1 & abs(duracao_3a_2014 - duracao_3a_2013) < 1,
+    junto_2014 = abs(saida_1a_2014 - saida_2a_2014) <= janela_min &
+                 abs(saida_1a_2014 - saida_3a_2014) <= janela_min,
+    # duracao sem informacao (NA) conta como criterio nao cumprido
+    across(c(c1, c2, c3, junto_2014), ~ coalesce(.x, FALSE)),
+    tratada  = c1 & c2 & c3,
+    controle = c1 & c3 & junto_2014
+  )
+
+n_trat <- c(
+  base     = nrow(criterios),
+  c1       = sum(criterios$c1),
+  c2       = sum(criterios$c2),
+  c3       = sum(criterios$c3),
+  tratada  = sum(criterios$tratada),
+  controle = sum(criterios$controle),
+  outra    = sum(criterios$c1 & criterios$c3 & !criterios$tratada & !criterios$controle)
+)
+
+tabela_trat <- tibble(
+  Schools = c(
+    "Sample (Table 1)",
+    "1st, 2nd and 3rd years in the morning, 2013 and 2014",
+    "(i) Shared release in 2013",
+    paste0("(ii) 1st year leaves ", limiar_min, "+ min later in 2014"),
+    "(iii) 2nd and 3rd years unchanged",
+    "Treated: (i), (ii) and (iii)",
+    "Control: (i) and (iii), still shared in 2014",
+    "Other: (i) and (iii), neither"
+  ),
+  N   = c(n_amostra, n_trat),
+  `%` = c(100, pct_amostra(n_trat))
+)
+
+print(tabela_trat, width = Inf)
+
+writexl::write_xlsx(list(escolas_2013 = tabela, saida_junto = tabela_junto,
+                         tratamento = tabela_trat, criterios_escola = criterios,
+                         turnos = tabela_turnos),
                     file.path(dir_output, "tabela_escolas_2013.xlsx"))
 
 # -------------------------------------------------------------------
-# .tex das duas tabelas (so o tabular; legenda e notas ficam no main.tex)
+# .tex das tabelas (so o tabular; legenda e notas ficam no main.tex)
 # -------------------------------------------------------------------
 # numero -> texto (milhar com virgula; NA vira celula vazia)
 fmt <- function(x, digitos = 0) {
@@ -200,8 +260,7 @@ fmt <- function(x, digitos = 0) {
 }
 
 tabela_tex <- tabela %>%
-  mutate(N   = c(fmt(head(N, -1)), fmt(tail(N, 1), 1)),
-         `%` = fmt(`%`, 1))
+  mutate(N = fmt(N), `%` = fmt(`%`, 1))
 
 tabela_junto_tex <- tabela_junto %>%
   mutate(across(2:3, fmt), `%` = fmt(`%`, 1), Year = as.character(Year))
@@ -212,3 +271,17 @@ writeLines(knitr::kable(tabela_tex, format = "latex", booktabs = TRUE, align = "
 writeLines(knitr::kable(tabela_junto_tex, format = "latex", booktabs = TRUE, align = "lrrr",
                         linesep = ""),
            file.path(dir_output, "tabela_saida_junto.tex"))
+
+tabela_turnos_tex <- tabela_turnos %>%
+  mutate(N = fmt(N), `%` = fmt(`%`, 1), `Also night EM` = fmt(`Also night EM`))
+
+writeLines(knitr::kable(tabela_turnos_tex, format = "latex", booktabs = TRUE, align = "lrrr",
+                        linesep = ""),
+           file.path(dir_output, "tabela_turnos.tex"))
+
+tabela_trat_tex <- tabela_trat %>%
+  mutate(N = fmt(N), `%` = fmt(`%`, 1))
+
+writeLines(knitr::kable(tabela_trat_tex, format = "latex", booktabs = TRUE, align = "lrr",
+                        linesep = ""),
+           file.path(dir_output, "tabela_tratamento.tex"))

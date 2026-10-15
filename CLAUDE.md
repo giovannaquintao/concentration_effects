@@ -48,6 +48,12 @@ The paper is at an early stage. Current work: **choosing the source of variation
 - **Code not yet updated:** `01_amostra.R` still builds the RMBH sample (`amostra_id_escola.rds`), and scripts 02–07 and 09–12 filter on it. Only `08_horarios_1em_2em.R` already runs on all MG state schools. All results recorded below (Open question 4, figures in `output/`) come from the RMBH sample and need to be redone.
 - Old sample (dropped, kept for reference): Metropolitan Region of Belo Horizonte (34 municipalities), state schools that offer both 9th grade and EM. 2015: 283 schools, ~28k 9th-grade students, 857 classes. State schools = 57% of public 9th-grade enrollment in the RMBH; state schools that also have EM = 44.4%.
 
+## Current design (2026-10-15)
+
+- Students: 2nd- and 3rd-year EM. Variation: the 2014 one-year change in 1st-year EM schedules (1st year leaves ~50 min later; returns in 2015).
+- Treated / control are defined in `misc/main.tex` ("Treated and control schools") and counted by `code/1_tabela_escolas_2013.R` → `output/tabela_tratamento.tex`. **Analysis sample (decided 2026-10-15), Table 1 of `code/1_tabela_escolas_2013.R`, sequential exclusions in 2013: (1) all state schools with EM (2,209) − (2) pilot schools (132) − (3) schools with afternoon EM classes (551) − (4) schools with different release times within a grade in the morning (95) = 1,431 schools.** Night classes are allowed; about 200 of the 1,431 have EM only at night and drop out of the treated/control base. Criteria use only morning classes, in schools with all three grades in the morning in 2013 and 2014 (1,079 schools): treated = (i) shared release in 2013 (≤ 5 min) + (ii) 1st year leaves 40+ min later in 2014 with 1st-year duration up 40+ min + (iii) 2nd/3rd-year start and duration unchanged (573 schools); control = (i) + (iii) + still shared in 2014 (221 schools). Don't read "only morning" as excluding night classes.
+- The 9th-grade designs below are the earlier setup, kept for reference.
+
 ## Candidate sources of variation
 
 (Full notation is in the .tex.)
