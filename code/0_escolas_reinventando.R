@@ -67,7 +67,7 @@ id_escolas_2012 <- c(
   "31000205", 
   "31002348", 
   "31002445",
-  "31002500"
+  "31002348"
 )
 
 # todas as escolas do piloto (2012 e 2013), sem repeticao
