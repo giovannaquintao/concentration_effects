@@ -9,6 +9,7 @@
 \usepackage{indentfirst}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{float}
 \graphicspath{{../output/}}
 \begin{document}
 
@@ -18,17 +19,16 @@
 \date{\today}
 \maketitle
 %==============================================
-
 Note: This is not written in a "paper tone", but more as a report to registry the reasoning and the data
 \section{Research question}
 
 \noindent Does the concentration of students leaving school at the same time
 affect crime in the short run?
 
-\paragraph{Reduced form.} Did the 2014 change in the schedule of 1st-year EM
+\paragraph{Reduced form.} Did the 2014 change in the schedule of 1st-year HS
 classes, which stopped them from leaving school at the same time as the 2nd
 and 3rd years, change crime by or against 2nd- and 3rd-year students after
-release, in schools that used to release all EM years together?
+release, in schools that used to release all HS years together?
 
  \section{Motivation}
 
@@ -123,18 +123,18 @@ third the report. Each of these mechanisms operate in the different manner.
       \end{enumerate}
       \item[B.] Second, the peer effect: .
       \begin{enumerate}
-            \item \textbf{Learning.} Students can learn from other students.
+            \item Learning. Students can learn from other students.
                   In our main specification, we are measuring the exposition of older students to
                   younger ones so this channel may be weaker in our case. But we can test (long-shot) if there is an increase in crimes
                    committed jointly with a prior offernder and a first-time offender.  Perhaps we do not have enough variation. 
-            \item \textbf{Recruitment.} If a 3rd-year
+            \item Recruitment. If a 3rd-year
                   student pulls 1st-year students into a theft, the 3rd-year
                   student's own crime also increases, because they offend
                   together. We can test this with crimes committed by mixed-grade
                   groups.             
-            \item \textbf{Status.} Older students may act out/show off to
+            \item Status. Older students may act out/show off to
                   impress younger ones. 
-            \item \textbf{Within student rivalries.} Students can fight because of their
+            \item Within student rivalries. Students can fight because of their
                   rivalries, including hazing of 1st-year students by older
                   students. This predicts fights
                  across grades, with older offenders and younger
@@ -160,21 +160,11 @@ likely to be reported to the police.
                         police can deter crime (a real change in
                         behavior), and more police can detect more, 
             \end{itemize}
-            We can test for these channels by checking whether, with shared
-            release:
-            \begin{enumerate}
-                  \item the average time between the crime and the arrival of
-                        the police (or the report) changes;
-                  \item the share of crimes in which the police are already at
-                        the scene, or arrest the offender in the act
-                        (\emph{flagrante}), increases;
-                  \item the share of incidents started by the police (patrol)
-                        rather than by a call from a victim or witness changes;
-                  \item serious crimes, which are reported whoever is watching
-                       , respond in the same way as
-                        minor crimes. If only minor crimes respond, the effect
+            We can test for these channels by checking :the average time between the crime and the arrival of
+                        the police (or the report) changes; if serious crimes, which are reported whoever is watching
+                       , respond in the same way as          minor crimes. If only minor crimes respond, the effect
                         is more likely to come from reporting.
-            \end{enumerate}
+
 \end{enumerate}
 
 \section{Further analysis/Heterogenous}
@@ -202,9 +192,9 @@ We can also investigate:
 
 \begin{itemize}
   \item \textbf{Population.} Students in the 2nd and 3rd years of high school
-        (EM) in state schools in Minas Gerais that offer all three years of EM.
+        (HS) in state schools in Minas Gerais that offer all three years of HS.
   \item \textbf{Treatment.} The class is released at the same time as the
-        1st-year EM classes of the same school and shift. A continuous version
+        1st-year HS classes of the same school and shift. A continuous version
         is the number of 1st-year students released within $X$ minutes of the
         class.
   \item \textbf{Outcome.} Crime committed by (and against) 2nd- and 3rd-year
@@ -213,73 +203,37 @@ We can also investigate:
 \item Level of analysis: school
 \end{itemize}
 
-\paragraph{Sample.} State schools in Minas Gerais with at least one 1st-, 2nd-
-or 3rd-year EM class in 2013, excluding the schools of the \emph{Reinventando o
-Ensino M\'edio} pilot (2012 and 2013). Table~\ref{tab:escolas_2013} describes
-the sample. The analysis uses the 1,325 of these schools that, in 2013, had EM
-classes in the morning and none in the afternoon; they may also have night
-classes (Table~\ref{tab:turnos}).
+\paragraph{Sample.} \textcolor{red}{Exclude first the afternoon schools to
+simplify the reasoning, after include them.} We start from the state schools in
+Minas Gerais with 1st-, 2nd- and 3rd-year HS classes in 2013, in any shift, and
+exclude, in this order: the schools of the \emph{Reinventando o Ensino M\'edio}
+pilot (2012 and 2013); schools with HS classes in the afternoon; schools whose
+morning classes of the same grade leave at different times; and schools without
+HS classes in the morning (night only). Table~\ref{tab:escolas_2013} shows how
+many schools each step removes. The sample keeps 1,203 schools, which may also
+have night classes.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
-\caption{State schools with high school (EM) in Minas Gerais, 2013.}
+\caption{Sample selection, 2013.}
 \label{tab:escolas_2013}
 \input{../output/tabela_escolas_2013.tex}
 \par\medskip
 \begin{minipage}{0.9\textwidth}
-\footnotesize \emph{Notes:} Schools with at least one 1st-, 2nd- or 3rd-year
-EM class (regular, integrated or teacher training) in 2013. The sample excludes
-the schools of the \emph{Reinventando o Ensino M\'edio} pilot (2012 and 2013).
-Percentages are relative to the sample. Duration rows: change in the mean
-duration of 1st-year classes from 2013 to 2014 in at least one shift of the
-school; unchanged means the same mean duration in every shift with 1st-year
-classes in both years. Morning: classes starting before 12:00; afternoon:
-classes starting between 12:00 and 14:00. Release times are compared within the
-same grade and shift, morning and afternoon only. Average classes per grade:
-mean over school $\times$ grade.
+\footnotesize \emph{Notes:} Each row removes schools from those left by the rows
+above. Percentages are relative to row 1. Morning classes start before 12:00;
+afternoon classes, between 12:00 and 14:00.
 \end{minipage}
 \end{table}
 
-\begin{table}[htbp]
-\centering
-\caption{Sample schools by the shift of their EM classes, 2013.}
-\label{tab:turnos}
-\input{../output/tabela_turnos.tex}
-\par\medskip
-\begin{minipage}{0.9\textwidth}
-\footnotesize \emph{Notes:} Sample of Table~\ref{tab:escolas_2013}. Shift of
-the 1st-, 2nd- and 3rd-year EM classes: morning, classes starting before
-12:00; afternoon, classes starting between 12:00 and 14:00; night, classes
-starting after 14:00. Only morning: at least one morning class and no afternoon
-class; only afternoon: the reverse. The rows can also have night classes; the
-last column counts them. Percentages are relative to the sample.
-\end{minipage}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Sample schools that release the 1st year together with the 2nd and
-3rd years, 2013--2015.}
-\label{tab:saida_junto}
-\input{../output/tabela_saida_junto.tex}
-\par\medskip
-\begin{minipage}{0.9\textwidth}
-\footnotesize \emph{Notes:} Sample of Table~\ref{tab:escolas_2013}. For each
-school, year and shift (morning or afternoon), difference between the mean
-release time of 1st-year classes and the mean release time of 2nd- and 3rd-year
-classes. Release within 5 min: the difference is 5 minutes or less in at least
-one shift. Comparable schools: schools with 1st-year and 2nd- or 3rd-year
-classes in the same shift in that year. Percentages are relative to the sample.
-\end{minipage}
-\end{table}
 
 \section{Main Identification Strategy}
 
-\subsection{Motivation for the Identification Strategy}
+\subsection{Motivation:The naive comparison}
 
 \paragraph{The naive comparison.} The simplest design compares schools that
-release the three EM years together with schools that release each year at a
-different time. But release times are not random. There are confounders at school, individual, time of day levels. 
+release the three HS years together with schools that release each year at a
+different time. But release times are not random. There are confounders at school, individual, time of day levels (Figure~\ref{fig:dag}, Appendix~\ref{app:dag}).
 
 \emph{School level.}Schools with fewer classes can release
         everyone together, so shared release is more common in smaller schools.
@@ -287,7 +241,7 @@ different time. But release times are not random. There are confounders at schoo
         or extra shifts, which are also related to school quality.
  Principals may stagger release
         because of fights at the gate, so treatment responds to past
-        violence (PARA CLAUDIA: COLOCAR ESTE PARENTESES EM VERMLEHO check if this reverse causality impact the main specification).
+        violence \textcolor{red}{(check if this reverse causality impact the main specification)}.
 
 
 \emph{Individual level.}   Families choose schools, so students in
@@ -301,55 +255,145 @@ different time. But release times are not random. There are confounders at schoo
 \emph{Time of day.} A different release time is a different clock time, with
 different parental supervision, daylight, policing and street activity.
 
-\paragraph{A source of variation: the 2014 change in 1st-year schedules.} In
-2014, 1st-year EM classes in state schools in Minas Gerais became about
+\subsection{Source of variation: The Program \emph{Reinventando o Ensino M\'edio}}
+
+\emph{Reinventando o Ensino M\'edio} (REM) was a reform of the state
+high-school curriculum in Minas Gerais. Besides the general curriculum,
+students took courses in an ``employability area'': each school chose three of
+five areas (applied communication, entrepreneurship and management, environment
+and natural resources, information technology, and tourism), and each student
+chose one of them. The total workload of high school became 3,000 hours over the
+three years: 2,500 hours of general education and 500 hours in the
+employability areas (Appendix~\ref{app:carga}). To fit the extra hours, the day shifts gained a sixth class
+period (\emph{6\textsuperscript{o} hor\'ario}): five periods of 50 minutes
+became six, about 50 more minutes per day. The night shift kept five periods and
+organized the extra hours as projects. The program started as a pilot in 2012,
+in 11 schools of the Metropolitana C regional office in Belo Horizonte, and was
+extended to 122 more schools in 2013. Resolu\c{c}\~ao SEE n\textsuperscript{o}
+2.486, of 20 December 2013, extended it to all state high schools from 2014,
+starting with the 1st year; 2nd- and 3rd-year students kept a transition
+curriculum until they finished high school. The program ended at the end of
+2014, with the change of state government: Resolu\c{c}\~ao SEE
+n\textsuperscript{o} 2.742, of 22 January 2015, revoked it and brought high
+school back to 833 hours and 20 minutes per year (2,500 hours in total).
+
+In 2014, 1st-year HS classes in state schools in Minas Gerais became about
 50 minutes longer, for that year only (bacause of
-\emph{Reinventando o Ensino M\'edio}). Morning 1st-year classes
-moved their release from 11:20--11:30 to about 12:10--12:20.
- In 2015 the 1st year went back to its previous schedule. PARA CLAUDIA: COLOCAR GRAFICO DE LINHA AQUI
+\emph{Reinventando o Ensino M\'edio}). Many morning 1st-year classes were
+moved their release from 11:20--11:30 to about 12:10--12:20
+(Figure~\ref{fig:em_series_manha}).
+ In 2015 the 1st year went back to its previous schedule.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{horarios_em_series_manha_1ano.png}\\[1ex]
+\includegraphics[width=0.85\textwidth]{horarios_em_series_manha_2ano.png}\\[1ex]
+\includegraphics[width=0.85\textwidth]{horarios_em_series_manha_3ano.png}
+\caption{Release times of morning classes, by grade: 1st, 2nd and 3rd year,
+from top to bottom. Share of classes, sample schools.}
+\label{fig:em_series_manha}
+\end{figure}
 
 
 
-For a 2nd- or 3rd-year student in a school that released all EM years
-together, this means:
+For a 2nd- or 3rd-year student in a school that released all HS years
+together. This means that concentration falls in 2014 and returns in 2015,
+ but the time in school didnt change for 2nd and third years. And the change is set by the state, not by the school.
+  It does not  respond to violence at a particular school's gate.
+
+
+
+\paragraph{Descriptive evidence on the 2014 change.} 
+Figure~\ref{fig:em_series_manha} shows that, in the morning, 1st-year classes
+moved from 11:20--11:30 to 12:15--12:20 in 2014 only, while 2nd- and 3rd-year
+classes kept leaving at 11:20--11:30. Figure~\ref{fig:hist_diff} compares, within each school, the release time of
+the 1st year with that of the 2nd and 3rd years in the morning shift. In 2013
+and 2015 almost every school releases all HS years at the same time (difference
+of zero). In 2014 most schools release the 1st year about 50 minutes after the
+2nd and 3rd years: the median difference is 50 minutes, and 759 of 1,163
+schools have a difference of 40 minutes or more. 313 schools keep releasing all
+years together in 2014.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{hist_diff_saida_1em_manha.png}
+\caption{1st-year release time minus 2nd- and 3rd-year release time, by school,
+morning shift. Positive: the 1st year leaves later. The axis is cut at $-30$ and
+$80$ minutes, which leaves out 2, 5 and 7 schools in 2013, 2014 and 2015.}
+\label{fig:hist_diff}
+\end{figure}
+
+\subsection{Identification Strategy}
+
+\paragraph{Design: time windows around the bell.} We use geocoded crime
+records with the time of the event. In a treated school
+(Table~\ref{tab:tratamento}), the 2nd and 3rd years leave at the same time in
+2013, 2014 and 2015, but in 2014 they leave without the 1st year, who leaves
+about 50 minutes later. So in 2014 the crowd at the 2nd- and 3rd-year release is
+smaller, and a second, smaller crowd appears when the 1st year leaves. We
+compare crime near the school in the window after the 2nd- and 3rd-year release
+with other windows of the same day, on school days and on days without school
+(weekends, holidays, vacations), in 2014 against 2013 and 2015. The design does
+not need control schools.
+
+Let $R$ be the window right after the 2nd- and 3rd-year release, $O$ the other
+windows of the day, $S$ school days and $N$ days without school. The estimate
+is a triple difference:
+\begin{equation}
+  \hat\beta = \Big[\big(\overline{V}^{R}_{S} - \overline{V}^{O}_{S}\big)
+  - \big(\overline{V}^{R}_{N} - \overline{V}^{O}_{N}\big)\Big]_{2014}
+  - \Big[\big(\overline{V}^{R}_{S} - \overline{V}^{O}_{S}\big)
+  - \big(\overline{V}^{R}_{N} - \overline{V}^{O}_{N}\big)\Big]_{2013,\,2015},
+\end{equation}
+where $\overline{V}$ is the mean number of crimes within $r$ meters of the
+school per window. If concentration raises crime, $\hat\beta<0$.
+
 \begin{itemize}
-  \item \textbf{Concentration falls in 2014 and returns in 2015.} The 1st-year
-        students no longer leave with them in 2014, and leave with them again
-        in 2015.
-  \item \textbf{Their own schedule is unchanged.} Start time, class duration
-        and release time are the same, so incapacitation (hours in school,
-        free time) and clock time are held fixed.
-  \item \textbf{The change is set by the state, not by the school.} It does not
-        respond to violence at a particular school's gate.
+  \item \textbf{Comparison:} release window vs other windows of the same day,
+        school days vs days without school, 2014 vs 2013 and 2015, in treated
+        schools.
+  \item \textbf{Unit:} school $\times$ 30-minute window $\times$ day.
+  \item \textbf{Fixed effects:} school $\times$ day (anything that hits the
+        school's surroundings on that day); school $\times$ window $\times$ type
+        of day (each school's crime profile by time of day, on school days and
+        on other days); school $\times$ window $\times$ year (changes at that
+        time of day in 2014 that also happen on days without school).
+  \item \textbf{Identifying assumption:} without the 2014 change, the extra
+        crime in the release window on school days, relative to other windows
+        and to days without school, would have been the same in 2014 as in
+        2013 and 2015.
+  \item \textbf{Reversal:} concentration returns in 2015, so the difference
+        between 2015 and 2014 should have the opposite sign of the difference
+        between 2014 and 2013.
+  \item \textbf{Concentration test:} in 2014 the 1st year and the 2nd and 3rd
+        years leave in two windows instead of one. If crime grows faster than
+        the number of students released together, crime in the two windows in
+        2014 adds up to less than crime in the single window of 2013 and 2015.
+        If crime is proportional to the number of students, the sum does not
+        change.
 \end{itemize}
 
-\paragraph{Design.} Compare 2nd- and 3rd-year students in schools that shared
-release with the 1st year before 2014 (treated: sharing stops in 2014 and
-returns in 2015) with students in schools that did not share release (control:
-no change), in 2012--2016. The reversal in 2015 is a second test: if crime
-falls in 2014 because of lower concentration, it should rise again in 2015.
+\paragraph{School days in 2014.} The state school calendar
+(Resolu\c{c}\~ao SEE n\textsuperscript{o} 2.368/2013) defines which days are
+school days (Figure~\ref{fig:calendario}). Classes ran from 3 February to 19
+December, with 200 school days on weekdays. Days without school are weekends,
+holidays and recesses. There were no classes during the World Cup (recess from
+12 June to 11 July), so those days are days without school, but with unusual
+policing and street activity; they should be treated separately. The special
+school days (the REM curriculum seminar on 18--20 February and the Dia D on 4
+and 7 June) probably had a different schedule and should be dropped.
 
-\begin{itemize}
-  \item \textbf{Comparison:} treated vs control schools, before, during and
-        after 2014.
-  \item \textbf{Unit:} 2nd- and 3rd-year class (or school $\times$ shift)
-        $\times$ year.
-  \item \textbf{Fixed effects:} school $\times$ shift and year.
-  \item \textbf{Identifying assumption:} without the 2014 change, crime around
-        the release of 2nd- and 3rd-year students would have evolved in
-        parallel in treated and control schools; and the 2014 change affected
-        these students only through the number of students released with
-        them.
-\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{calendario_2014.png}
+\caption{State school calendar, 2014. Source: Resolu\c{c}\~ao SEE
+n\textsuperscript{o} 2.368/2013.}
+\label{fig:calendario}
+\end{figure}
 
-
-
-\paragraph{Treated and control schools.} The sample is the 1,325 schools with
-EM classes in the morning and none in the afternoon in 2013
-(Table~\ref{tab:turnos}). The criteria use only their morning classes, in
-schools with 1st-, 2nd- and 3rd-year morning classes in 2013 and 2014. Start
-time, class duration and release time are the means over the morning classes of
-each grade in the school.
+\paragraph{Treated schools.} We assume that all schools implemented the program
+in 2014, so there is no control group of schools. A school is treated if it
+meets three criteria:
 \begin{itemize}
   \item \textbf{(i) Shared release in 2013:} the 1st year left at most 5 minutes
         before or after the 2nd year and the 3rd year.
@@ -358,134 +402,62 @@ each grade in the school.
         rose by 40 minutes or more from 2013 to 2014.
   \item \textbf{(iii) The 2nd and 3rd years do not change:} same start time and
         same class duration in 2013 and 2014, and so the same release time.
-  \item \textbf{Treated:} (i), (ii) and (iii).
-  \item \textbf{Control:} (i) and (iii), and in 2014 the 1st year still left at
-        most 5 minutes before or after the 2nd and the 3rd years.
 \end{itemize}
-This control differs from the one in the design above (schools that did not
-share release): here, control schools shared release in 2013 and kept sharing
-it in 2014. The identifying assumption becomes parallel trends between schools
-that changed the 1st-year schedule and schools that did not; it fails if the
-reason a school did not change also changes its crime trend.
 Table~\ref{tab:tratamento} counts the schools that meet each criterion.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
-\caption{Treated and control schools: schools with EM in the morning and not in
-the afternoon, 2013.}
+\caption{Treated schools.}
 \label{tab:tratamento}
 \input{../output/tabela_tratamento.tex}
 \par\medskip
 \begin{minipage}{0.9\textwidth}
-\footnotesize \emph{Notes:} Only morning: sample schools of
-Table~\ref{tab:escolas_2013} with 1st-, 2nd- or 3rd-year EM classes starting
-before 12:00 and none starting between 12:00 and 14:00 in 2013
-(Table~\ref{tab:turnos}); they may have night classes. The criteria use only
-morning classes. Percentages are relative to the only-morning sample. Criteria
-(i)--(iii), treated and control as defined in the text. Other: schools that
-meet (i) and (iii) but neither (ii) nor the control condition (for example, in
-2014 the 1st year leaves between 5 and 40 minutes after the 2nd and 3rd years).
+\footnotesize \emph{Notes:} Morning classes only. Percentages are relative to
+the sample. Criteria (i)--(iii) as defined in the text.
 \end{minipage}
 \end{table}
 
 \paragraph{Threats.}
 \begin{itemize}
-  \item \textbf{Treated and control schools differ.} Schools that shared
-        release are smaller (see above). Fixed effects absorb level
-        differences, but not different trends. Check pre-trends in 2010--2013.
+  \item \textbf{Policing that follows the bell.} If patrols are scheduled
+        around the release and changed in 2014 (for example, to follow the
+        1st-year release), crime and its detection change for reasons other
+        than concentration.
   \item \textbf{The 1st-year students also change.} In 2014 they leave later
-        and spend more time in school, so their own crime changes. The outcome
-        must be crime by (or against) 2nd- and 3rd-year students, not all
-        youth crime near the school.
-  \item \textbf{Other changes in 2014.} The policy may have come with other
-        changes at the school (activities, staff) that affect all students. In
-        addition, Belo Horizonte hosted World Cup matches in June--July 2014,
-        with changes to the school calendar and heavy policing, and 2014 was an
-        election year. Year fixed effects absorb what is common to all
-        schools, but not effects that differ between treated and control
-        schools.
-  \item \textbf{Some 2nd-year classes also change.} The 3rd-year schedule does
-        not change in 2014, but a small share of 2nd-year classes also leaves
-        later that year (Figures~\ref{fig:em_series_manha}
-        and~\ref{fig:em_series_tarde}). For these classes, the students' own
-        release time changes too.
-  \item \textbf{Compliance.} Not all schools changed the 1st-year schedule in
-        2014 (Tables~\ref{tab:escolas_2013} and~\ref{tab:saida_junto}). Use the
-        observed change in each school's schedule, not just the year.
+        and spend more time in school, so their own crime changes. The release
+        window measures the 2nd and 3rd years; the 1st-year window captures the
+        1st year's own change.
+  \item \textbf{Other changes in 2014.} Belo Horizonte hosted World Cup matches
+        in June--July 2014, with changes to the school calendar and heavy
+        policing (drop those weeks), and 2014 was an election year. School
+        $\times$ day fixed effects absorb what hits the whole day; the threat
+        is what hits only the release window on school days.
+  \item \textbf{Students wait for each other.} 2nd- and 3rd-year students may
+        wait for 1st-year friends or siblings, so the crowd at the release
+        window falls less and part of it moves to the 1st-year window. This
+        weakens the contrast; the concentration test uses both windows.
+  \item \textbf{Time of the crime.} Police records may round the time of the
+        event or record the time of the report. Windows must be wide enough;
+        check heaping at round hours.
+  \item \textbf{Nearby schools.} Other schools within $r$ meters may release
+        at the same time, and they may or may not have changed in 2014 (state
+        high schools did; municipal and private schools did not). Choose $r$
+        and handle overlapping areas.
+  \item \textbf{2nd- and 3rd-year schedules.} In the sample, almost all 2nd-
+        and 3rd-year morning classes keep their release time in 2014
+        (Figure~\ref{fig:em_series_manha}).
+  \item \textbf{Schools that do not show the change.} The Censo shows the 1st
+        year leaving 40 minutes or more after the 2nd and 3rd years in 724 of
+        1,203 sample schools (Table~\ref{tab:tratamento}). We assume all
+        schools implemented the program and use only the treated schools,
+        whose declared schedule shows the change.
 \end{itemize}
 
-\paragraph{Descriptive evidence on the 2014 change.} Table~\ref{tab:escolas_2013}
-counts the sample schools whose mean 1st-year class duration rose 50 minutes or
-more from 2013 to 2014: 1,135 of 2,076 schools (54.7\%). The sample excludes
-the schools of the \emph{Reinventando o Ensino M\'edio} pilot (2012 and 2013),
-which may have adopted the change before the rest of the network.
-
-Figure~\ref{fig:em_series_manha} shows that, in the morning, 1st-year classes
-moved from 11:20--11:30 to 12:15--12:20 in 2014 only, while 2nd- and 3rd-year
-classes kept leaving at 11:20--11:30. Figure~\ref{fig:em_series_tarde} shows the
-same in the afternoon: 1st-year classes moved from 17:00--17:30 to
-17:50--18:20, while 2nd- and 3rd-year classes kept their release time. In the
-earlier sample of the Belo Horizonte metropolitan region, some schools also
-moved the afternoon start time earlier in 2014 (from 13:00 to 12:30), for the
-2nd year as well as the 1st; this still has to be checked in the current
-sample.
-
-Figure~\ref{fig:hist_diff} compares, within each school, the release time of
-the 1st year with that of the 2nd and 3rd years in the morning shift. In 2013
-and 2015 almost every school releases all EM years at the same time (difference
-of zero). In 2014 most schools release the 1st year about 50 minutes after the
-2nd and 3rd years: the median difference is 50 minutes, and 1,067 of 1,654
-schools have a difference of 40 minutes or more. 450 schools keep releasing all
-years together in 2014.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.9\textwidth]{hist_diff_saida_1em_manha.png}
-\caption{Difference, in each school, between the mean release time of 1st-year
-EM classes and the mean release time of 2nd- and 3rd-year EM classes, morning
-shift (classes starting before 12:00), in 2013, 2014 and 2015. Positive values:
-the 1st year leaves later. Sample schools (Table~\ref{tab:escolas_2013}) with
-both 1st-year and 2nd- or 3rd-year morning classes in the year. The horizontal
-axis is cut at $-30$ and $80$ minutes, which leaves out 15 schools in 2013, 8 in
-2014 and 13 in 2015.}
-\label{fig:hist_diff}
-\end{figure}
 
 
-
-
-\section{Release times by EM grade}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{horarios_em_series_manha_1ano.png}\\[1ex]
-\includegraphics[width=0.85\textwidth]{horarios_em_series_manha_2ano.png}\\[1ex]
-\includegraphics[width=0.85\textwidth]{horarios_em_series_manha_3ano.png}
-\caption{Release time of EM classes in the morning shift (classes starting
-before 12:00), by grade: 1st year (top), 2nd year (middle) and 3rd year
-(bottom). Share of the grade's classes released at each time, by year. Sample
-schools (Table~\ref{tab:escolas_2013}). The same release times, colors and
-vertical axis are used in the three graphs; less frequent times are grouped as
-Other.}
-\label{fig:em_series_manha}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{horarios_em_series_tarde_1ano.png}\\[1ex]
-\includegraphics[width=0.85\textwidth]{horarios_em_series_tarde_2ano.png}\\[1ex]
-\includegraphics[width=0.85\textwidth]{horarios_em_series_tarde_3ano.png}
-\caption{Release time of EM classes in the afternoon shift (classes starting
-between 12:00 and 14:00), by grade: 1st year (top), 2nd year (middle) and 3rd
-year (bottom). Share of the grade's classes released at each time, by year.
-Sample schools (Table~\ref{tab:escolas_2013}). The same release times, colors
-and vertical axis are used in the three graphs; less frequent times are grouped
-as Other.}
-\label{fig:em_series_tarde}
-\end{figure}
-
-
-
+% Secao escondida da compilacao (\iffalse ... \fi): para mostrar de novo,
+% apague as linhas \iffalse e \fi.
+\iffalse
 \subsection{Backup sources of variation}
 
 The main design rests on two assumptions: (i) without the 2014 change, crime
@@ -525,7 +497,7 @@ after release in shift $s$ and year $t$.
 \medskip
 \noindent\textbf{(b) Within school, across shifts.}
 \begin{itemize}
-  \item \textbf{Comparison:} in schools with EM in the morning and in the
+  \item \textbf{Comparison:} in schools with HS in the morning and in the
         afternoon (19.5\% of the sample, Table~\ref{tab:escolas_2013}), the
         shift whose 1st year stopped leaving with the 2nd and 3rd years in 2014
         vs the shift where they kept leaving together.
@@ -674,8 +646,9 @@ comparison of classes released at different times (the earlier ``RCT'') has
 little variation: only 6.2\% of the sample schools have different release times
 within a grade and shift (Table~\ref{tab:escolas_2013}). Changes in shared
 release in years other than 2014 appear to be rare (almost every school releases
-all EM years together in 2013 and 2015, Figure~\ref{fig:hist_diff}), and they
+all HS years together in 2013 and 2015, Figure~\ref{fig:hist_diff}), and they
 are chosen by the school, which brings back reverse causality.
+\fi
 
 
 
@@ -686,4 +659,89 @@ are chosen by the school, which brings back reverse causality.
 
 \bibliographystyle{aer}
 \bibliography{references}
+
+\appendix
+\section{High-school workload under \emph{Reinventando o Ensino M\'edio}}
+\label{app:carga}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../reinventando_em/universalizacao_2014_carga_horaria.png}
+\caption{1st year, day shift, under REM (2014): 30 class periods a week, 1,000
+hours a year. Source: Resolu\c{c}\~ao SEE n\textsuperscript{o} 2.486/2013,
+Annex II.}
+\label{fig:carga_2014_1ano}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../reinventando_em/continuacao_2014_2_3_ano.png}
+\caption{2nd and 3rd years in 2014, and 3rd year in 2015: 25 class periods a
+week, 833 hours a year. Source: Resolu\c{c}\~ao SEE n\textsuperscript{o}
+2.486/2013, Annexes VIII and IX.}
+\label{fig:carga_2014_2_3ano}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../reinventando_em/extincao_2015_carga_horaria.png}
+\caption{All years after the end of REM (2015): 25 class periods a week.
+Source: Resolu\c{c}\~ao SEE n\textsuperscript{o} 2.742/2015.}
+\label{fig:carga_2015}
+\end{figure}
+
+\section{Confounders of the naive comparison}
+\label{app:dag}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    var/.style={rectangle, rounded corners, draw=gray, thick, align=center,
+                text width=3.4cm, minimum height=1cm, font=\small,
+                execute at begin node={\hyphenpenalty=10000}},
+    main/.style={var, draw=black, very thick, fill=gray!10},
+    cvar/.style={var, draw=red!75!black, fill=red!4},
+    effect/.style={-{Latex[length=3mm]}, very thick},
+    conf/.style={-{Latex[length=2.5mm]}, thick, red!75!black},
+    link/.style={{Latex[length=2.5mm]}-{Latex[length=2.5mm]}, thick, dotted,
+                 red!75!black}
+]
+    \node[main] (conc)  at (0,0)  {Shared release};
+    \node[main] (crime) at (12,0) {Crime after release};
+    \draw[effect] (conc) -- (crime)
+        node[midway, below, font=\small] {effect of interest};
+
+    % hora do dia: definida pelo horario de saida
+    \node[cvar] (clock) at (6,3) {Time of day (parents at work, daylight, policing)};
+    \draw[conf] (clock) -- (crime);
+    \draw[link] (clock) -- (conc)
+        node[midway, above left, font=\scriptsize, text=red!75!black]
+        {release time sets clock time};
+
+    % nivel da escola e nivel individual
+    \node[cvar] (size)  at (-1.5,-3.2) {School size (few classes)};
+    \node[cvar] (infra) at (2.5,-3.2)  {Infrastructure (rooms, extra shifts)};
+    \node[cvar] (past)  at (6.5,-3.2)  {Past violence at the gate};
+    \node[cvar] (sort)  at (10.5,-3.2) {Sorting of students into schools, shifts and classes};
+    \node[cvar] (dense) at (-1.5,-6.2) {Density and neighborhood crime};
+
+    \draw[conf] (size)  -- (conc);
+    \draw[conf] (infra) -- (conc);
+    \draw[conf] (infra) -- (crime);
+    \draw[conf] (past)  -- (conc);
+    \draw[conf] (past)  -- (crime);
+    \draw[conf] (sort)  -- (conc);
+    \draw[conf] (sort)  -- (crime);
+    \draw[conf] (dense) -- (size);
+    \draw[conf, rounded corners=8pt] (dense.east) -- (14.5,-6.2) -- (14.5,0)
+        -- (crime.east);
+\end{tikzpicture}%
+}
+\caption{Confounders of the comparison between schools that release all HS
+years together and schools that do not. Black: effect of interest. Red:
+confounders.}
+\label{fig:dag}
+\end{figure}
+
 \end{document}

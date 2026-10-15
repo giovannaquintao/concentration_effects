@@ -3,34 +3,10 @@
 \fi
 \begin{thebibliography}{xx}
 
-\harvarditem[Arkhangelsky et al.]{Arkhangelsky, Athey, Hirshberg, Imbens and
-  Wager}{2021}{arkhangelsky2021}
-{\bf Arkhangelsky, Dmitry, Susan Athey, David~A. Hirshberg, Guido~W. Imbens,
-  and Stefan Wager}, ``Synthetic Difference-in-Differences,'' {\it American
-  Economic Review}, 2021, {\it 111} (12), 4088--4118.
-
 \harvarditem[Billings et al.]{Billings, Deming and Ross}{2019}{billings2019}
 {\bf Billings, Stephen~B., David~J. Deming, and Stephen~L. Ross}, ``Partners in
   Crime,'' {\it American Economic Journal: Applied Economics}, 2019, {\it 11}
   (1), 126--150.
-
-\harvarditem[Callaway et al.]{Callaway, Goodman-Bacon and
-  Sant'Anna}{2024}{callaway2024}
-{\bf Callaway, Brantly, Andrew Goodman-Bacon, and Pedro H.~C. Sant'Anna},
-  ``Difference-in-Differences with a Continuous Treatment,'' NBER Working Paper
-  32117, National Bureau of Economic Research 2024.
-
-\harvarditem[de~Chaisemartin and D'Haultf{\oe}uille]{de~Chaisemartin and
-  D'Haultf{\oe}uille}{2018}{dechaisemartin2018}
-{\bf de~Chaisemartin, Cl{\'e}ment and Xavier D'Haultf{\oe}uille}, ``Fuzzy
-  Differences-in-Differences,'' {\it Review of Economic Studies}, 2018, {\it
-  85} (2), 999--1028.
-
-\harvarditem[de~Chaisemartin and D'Haultf{\oe}uille]{de~Chaisemartin and
-  D'Haultf{\oe}uille}{2020}{dechaisemartin2020}
-{\bf \bysame{} and \bysame{}}, ``Two-Way Fixed Effects Estimators with
-  Heterogeneous Treatment Effects,'' {\it American Economic Review}, 2020, {\it
-  110} (9), 2964--2996.
 
 \harvarditem[Jacob and Lefgren]{Jacob and Lefgren}{2003}{jacob2003}
 {\bf Jacob, Brian~A. and Lars Lefgren}, ``Are Idle Hands the Devil's Workshop?
@@ -46,10 +22,5 @@
 {\bf Luallen, Jeremy}, ``School's Out\ldots Forever: A Study of Juvenile Crime,
   At-Risk Youths and Teacher Strikes,'' {\it Journal of Urban Economics}, 2006,
   {\it 59} (1), 75--103.
-
-\harvarditem[Rambachan and Roth]{Rambachan and Roth}{2023}{rambachan2023}
-{\bf Rambachan, Ashesh and Jonathan Roth}, ``A More Credible Approach to
-  Parallel Trends,'' {\it Review of Economic Studies}, 2023, {\it 90} (5),
-  2555--2591.
 
 \end{thebibliography}

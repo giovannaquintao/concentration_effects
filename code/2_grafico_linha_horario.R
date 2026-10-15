@@ -18,15 +18,16 @@ censo <- read_sql("
     AND rede = 'estadual'
 ")
 
-# escolas do piloto do Reinventando (2012 e 2013), salvas em 0_escolas_reinventando.R
-id_escolas_reinventando <- readRDS(file.path(dir_output, "id_escolas_reinventando.rds"))
+# amostra salva em 1_tabela_escolas_2013.R (tabela 1: todas - piloto -
+# com turma a tarde - com horarios de saida diferentes na mesma serie)
+escolas_amostra <- readRDS(file.path(dir_output, "id_escolas_amostra.rds"))
 
 # =====================================================================
 # Objetivo: como os horarios de SAIDA mais frequentes das turmas de
 # 1a, 2a e 3a series do Ensino Medio mudam de um ano para o outro, no turno
-# da manha e no turno da tarde. Seis graficos de linhas: um por serie em
-# cada turno. Dentro do turno, os tres graficos usam os mesmos horarios,
-# as mesmas cores e o mesmo eixo y, para comparar as series.
+# da manha (a amostra nao tem escolas com EM a tarde). Tres graficos de
+# linhas, um por serie, com os mesmos horarios, as mesmas cores e o mesmo
+# eixo y, para comparar as series.
 # =====================================================================
 turmas_em <- censo %>%
   mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer)) %>%
@@ -45,14 +46,7 @@ turmas_em <- censo %>%
       entrada_min <= 14 * 60 ~ "tarde",
       TRUE                   ~ "outro"
     )
-  )
-
-# amostra (mesma de 1_tabela_escolas_2013.R): escolas estaduais de MG com
-# turma de EM em 2013, sem as escolas do piloto
-escolas_amostra <- setdiff(unique(turmas_em$id_escola[turmas_em$ano == 2013]),
-                           id_escolas_reinventando)
-
-turmas_em <- turmas_em %>%
+  ) %>%
   filter(id_escola %in% escolas_amostra, !is.na(saida_min))
 
 # serie -> sufixo do nome do arquivo
@@ -182,5 +176,3 @@ horarios_turno <- function(turno_sel, turno_en, subtitulo) {
 
 horarios_turno("manha", "morning",
                "Release time, % of classes starting before 12:00, sample schools")
-horarios_turno("tarde", "afternoon",
-               "Release time, % of classes starting between 12:00 and 14:00, sample schools")

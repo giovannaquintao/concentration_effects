@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.9)  15 OCT 2026 15:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.9)  15 OCT 2026 17:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -356,26 +356,33 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count322
 \@lastruleclass=\count323
 \@thisrulewidth=\dimen290
+) (C:\Users\giova\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count324
+\float@exts=\toks38
+\float@box=\box66
+\@float@everytoks=\toks39
+\@floatcapt=\box67
 ) (C:\Users\giova\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count324
+\l__color_backend_stack_int=\count325
 ) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -413,17 +420,17 @@ LaTeX Font Info:    ... okay on input line 13.
 
 (C:\Users\giova\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count325
+\scratchcounter=\count326
 \scratchdimen=\dimen291
-\scratchbox=\box66
-\nofMPsegments=\count326
-\nofMParguments=\count327
-\everyMPshowfont=\toks38
-\MPscratchCnt=\count328
+\scratchbox=\box68
+\nofMPsegments=\count327
+\nofMParguments=\count328
+\everyMPshowfont=\toks40
+\MPscratchCnt=\count329
 \MPscratchDim=\dimen292
-\MPnumerator=\count329
-\makeMPintoPDFobject=\count330
-\everyMPtoPDFconversion=\toks39
+\MPnumerator=\count330
+\makeMPintoPDFobject=\count331
+\everyMPtoPDFconversion=\toks41
 ) (C:\Users\giova\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -431,61 +438,49 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 )) [1
 
-{C:/Users/giova/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] [3] (../output/tabela_escolas_2013.tex) (../output/tabela_turnos.tex) (../output/tabela_saida_junto.tex) [4] [5] (../output/tabela_tratamento.tex) [6]
-<../output/hist_diff_saida_1em_manha.png, id=37, 722.7pt x 578.16pt>
-File: ../output/hist_diff_saida_1em_manha.png Graphic file (type png)
-<use ../output/hist_diff_saida_1em_manha.png>
-Package pdftex.def Info: ../output/hist_diff_saida_1em_manha.png  used on input line 443.
-(pdftex.def)             Requested size: 422.77664pt x 338.21782pt.
-<../output/horarios_em_series_manha_1ano.png, id=38, 650.43pt x 260.172pt>
+{C:/Users/giova/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] [3] (../output/tabela_escolas_2013.tex) [4]
+<../output/horarios_em_series_manha_1ano.png, id=30, 650.43pt x 260.172pt>
 File: ../output/horarios_em_series_manha_1ano.png Graphic file (type png)
 <use ../output/horarios_em_series_manha_1ano.png>
-Package pdftex.def Info: ../output/horarios_em_series_manha_1ano.png  used on input line 461.
+Package pdftex.def Info: ../output/horarios_em_series_manha_1ano.png  used on input line 289.
 (pdftex.def)             Requested size: 399.29463pt x 159.72096pt.
-<../output/horarios_em_series_manha_2ano.png, id=39, 650.43pt x 260.172pt>
+<../output/horarios_em_series_manha_2ano.png, id=31, 650.43pt x 260.172pt>
 File: ../output/horarios_em_series_manha_2ano.png Graphic file (type png)
 <use ../output/horarios_em_series_manha_2ano.png>
-Package pdftex.def Info: ../output/horarios_em_series_manha_2ano.png  used on input line 462.
+Package pdftex.def Info: ../output/horarios_em_series_manha_2ano.png  used on input line 290.
 (pdftex.def)             Requested size: 399.29463pt x 159.72096pt.
-<../output/horarios_em_series_manha_3ano.png, id=40, 650.43pt x 260.172pt>
+<../output/horarios_em_series_manha_3ano.png, id=32, 650.43pt x 260.172pt>
 File: ../output/horarios_em_series_manha_3ano.png Graphic file (type png)
 <use ../output/horarios_em_series_manha_3ano.png>
-Package pdftex.def Info: ../output/horarios_em_series_manha_3ano.png  used on input line 463.
+Package pdftex.def Info: ../output/horarios_em_series_manha_3ano.png  used on input line 291.
 (pdftex.def)             Requested size: 399.29463pt x 159.72096pt.
- [7]
-<../output/horarios_em_series_tarde_1ano.png, id=45, 650.43pt x 260.172pt>
-File: ../output/horarios_em_series_tarde_1ano.png Graphic file (type png)
-<use ../output/horarios_em_series_tarde_1ano.png>
-Package pdftex.def Info: ../output/horarios_em_series_tarde_1ano.png  used on input line 475.
-(pdftex.def)             Requested size: 399.29463pt x 159.72096pt.
-<../output/horarios_em_series_tarde_2ano.png, id=46, 650.43pt x 260.172pt>
-File: ../output/horarios_em_series_tarde_2ano.png Graphic file (type png)
-<use ../output/horarios_em_series_tarde_2ano.png>
-Package pdftex.def Info: ../output/horarios_em_series_tarde_2ano.png  used on input line 476.
-(pdftex.def)             Requested size: 399.29463pt x 159.72096pt.
-<../output/horarios_em_series_tarde_3ano.png, id=47, 650.43pt x 260.172pt>
-File: ../output/horarios_em_series_tarde_3ano.png Graphic file (type png)
-<use ../output/horarios_em_series_tarde_3ano.png>
-Package pdftex.def Info: ../output/horarios_em_series_tarde_3ano.png  used on input line 477.
-(pdftex.def)             Requested size: 399.29463pt x 159.72096pt.
- [8 <../output/hist_diff_saida_1em_manha.png>] [9 <../output/horarios_em_series_manha_1ano.png> <../output/horarios_em_series_manha_2ano.png> <../output/horarios_em_series_manha_3ano.png>] [10 <../output/horarios_em_series_tarde_1ano.png> <../output/horarios_em_series_tarde_2ano.png> <../output/horarios_em_series_tarde_3ano.png>] [11] [12] (main.bbl [13]) [14] (main.aux)
- ***********
-LaTeX2e <2025-11-01>
-L3 programming layer <2026-01-19>
- ***********
- ) 
-Here is how much of TeX's memory you used:
- 14216 strings out of 467867
- 289864 string characters out of 5418335
- 680005 words of memory out of 5000000
- 42836 multiletter control sequences out of 15000+600000
- 643978 words of font info for 77 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 102i,8n,107p,661b,305s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti0900.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\giova\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/giova/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on main.pdf (14 pages, 927046 bytes).
-PDF statistics:
- 486 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 48 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ [5] [6 <../output/horarios_em_series_manha_1ano.png> <../output/horarios_em_series_manha_2ano.png> <../output/horarios_em_series_manha_3ano.png>]
+<../output/hist_diff_saida_1em_manha.png, id=42, 722.7pt x 578.16pt>
+File: ../output/hist_diff_saida_1em_manha.png Graphic file (type png)
+<use ../output/hist_diff_saida_1em_manha.png>
+Package pdftex.def Info: ../output/hist_diff_saida_1em_manha.png  used on input line 319.
+(pdftex.def)             Requested size: 422.77664pt x 338.21782pt.
+ [7 <../output/hist_diff_saida_1em_manha.png>]
+<../output/calendario_2014.png, id=50, 794.97pt x 397.485pt>
+File: ../output/calendario_2014.png Graphic file (type png)
+<use ../output/calendario_2014.png>
+Package pdftex.def Info: ../output/calendario_2014.png  used on input line 388.
+(pdftex.def)             Requested size: 469.75502pt x 234.88408pt.
+ [8] (../output/tabela_tratamento.tex) [9 <../output/calendario_2014.png>] (main.bbl)
+<../reinventando_em/universalizacao_2014_carga_horaria.png, id=57, 696.10063pt x 321.2pt>
+File: ../reinventando_em/universalizacao_2014_carga_horaria.png Graphic file (type png)
+<use ../reinventando_em/universalizacao_2014_carga_horaria.png>
+Package pdftex.def Info: ../reinventando_em/universalizacao_2014_carga_horaria.png  used on input line 669.
+(pdftex.def)             Requested size: 469.75502pt x 216.75653pt.
+ [10]
+<../reinventando_em/continuacao_2014_2_3_ano.png, id=62, 714.16812pt x 285.065pt>
+File: ../reinventando_em/continuacao_2014_2_3_ano.png Graphic file (type png)
+<use ../reinventando_em/continuacao_2014_2_3_ano.png>
+Package pdftex.def Info: ../reinventando_em/continuacao_2014_2_3_ano.png  used on input line 678.
+(pdftex.def)             Requested size: 469.75502pt x 187.5084pt.
+<../reinventando_em/extincao_2015_carga_horaria.png, id=63, 421.575pt x 211.28937pt>
+File: ../reinventando_em/extincao_2015_carga_horaria.png Graphic file (type png)
+<use ../reinventando_em/extincao_2015_carga_horaria.png>
+Package pdftex.def Info: ../reinventando_em/extincao_2015_carga_horaria.png  used on input line 687.
+(pdftex.def)             Requested size: 399.29463pt x 200.12732pt.
+ [11 <../reinventando_em/universalizacao_2014_carga_horaria.png> <../reinventando_em/continuaca

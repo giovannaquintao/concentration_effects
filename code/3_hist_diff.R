@@ -19,24 +19,18 @@ censo <- read_sql("
 # Objetivo: para cada escola, a diferenca entre o horario medio de SAIDA
 # das turmas de 1a serie do EM e o horario medio de saida das turmas de
 # 2a e 3a series, no turno da manha. Um histograma por ano (2013, 2014,
-# 2015). Amostra de 1_tabela_escolas_2013.R: escolas estaduais de MG com
-# turma de EM em 2013, sem as escolas do piloto do Reinventando.
+# 2015). Amostra da tabela 1 de 1_tabela_escolas_2013.R.
 # =====================================================================
 
 # pasta output: funciona rodando de code/ ou da raiz do projeto
 dir_output <- if (dir.exists("../output")) "../output" else "output"
 
-# escolas do piloto do Reinventando (2012 e 2013), salvas em 0_escolas_reinventando.R
-id_escolas_reinventando <- readRDS(file.path(dir_output, "id_escolas_reinventando.rds"))
+# amostra salva em 1_tabela_escolas_2013.R (tabela 1: todas - piloto -
+# com turma a tarde - com horarios de saida diferentes na mesma serie)
+escolas_amostra <- readRDS(file.path(dir_output, "id_escolas_amostra.rds"))
 
 turmas <- censo %>%
-  mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer))
-
-# amostra: escolas com turma de EM em 2013, sem o piloto
-escolas_amostra <- setdiff(unique(turmas$id_escola[turmas$ano == 2013]),
-                           id_escolas_reinventando)
-
-turmas <- turmas %>%
+  mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer)) %>%
   filter(id_escola %in% escolas_amostra) %>%
   mutate(
     serie = case_when(
