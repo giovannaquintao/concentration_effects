@@ -13,7 +13,7 @@ The paper is at an early stage. Current work: **choosing the source of variation
 
 ## Project layout
 
-- [misc/concentration_peer_effect.tex](misc/concentration_peer_effect.tex): working notes (question, sample, candidate designs (a)–(d), confounders). This is the design document; keep it in sync with decisions.
+- [misc/main.tex](misc/main.tex): working notes (question, sample, candidate designs, confounders). This is the design document. Its text is changed only when the user writes "CHANGE TEXT" (see Conventions).
 - `code/`: scripts only, numbered in run order. `01` must run first (every other script reads `amostra_id_escola.rds`); `09` → `10` → `11`/`12` depend on each other; the rest are independent.
   - [01_amostra.R](code/01_amostra.R): defines the **old RMBH sample** (2015 cross-section). Saves `amostra_id_escola.rds`. To be replaced by all MG state schools (see Sample).
   - [02_mudancas_saida_9ano.R](code/02_mudancas_saida_9ano.R): 2007–2017 panel; detects within-school changes in the set of 9th-grade release times. Ends in an unfinished line (`sample<-`), so it doesn't run as a whole.
@@ -102,5 +102,6 @@ A design not yet in the notes: **(e) time × place variation in crime**. With ge
 
 - R + tidyverse; data pulled with `basedosdados::read_sql`. Code comments are in Portuguese. Keep that style when editing existing scripts.
 - Scripts read and write everything in `output/` through `dir_output <- if (dir.exists("../output")) "../output" else "output"`, so they run from `code/` or from the project root. New scripts: same header, next number, outputs only via `file.path(dir_output, ...)`.
-- The design notes are in LaTeX (`misc/`). When the design changes, update the .tex together with this file.
+- **Do not create or change the user's text in `misc/main.tex` unless the request contains the words "CHANGE TEXT".** This covers paragraphs, bullets, headings, captions and notes. Without those words, leave the text as it is. If a task seems to need a text change (for example, a number or a figure the text cites no longer matches the output), say so in the reply instead of editing.
+- The design notes are in LaTeX (`misc/main.tex`). When the design changes, update this file; the .tex only under the rule above.
 - When discussing identification, always state the comparison, the unit, the fixed effects, and the identifying assumption explicitly, and list what would violate it.

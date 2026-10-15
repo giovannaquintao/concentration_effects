@@ -6,13 +6,13 @@ set_billing_id("humancapitalindex")
 # pasta output: funciona rodando de code/ ou da raiz do projeto
 dir_output <- if (dir.exists("../output")) "../output" else "output"
 
-# 1a, 2a e 3a series do Ensino Medio (regular / integrado / normal-magisterio), 2013 e 2014
+# 1a, 2a e 3a series do Ensino Medio (regular / integrado / normal-magisterio), 2013-2015
 censo <- read_sql("
   SELECT
     ano, id_escola, id_turma, etapa_ensino,
     numero_duracao_turma, hora_inicial, minuto_inicial
   FROM `basedosdados.br_inep_censo_escolar.turma`
-  WHERE ano IN (2013, 2014)
+  WHERE ano BETWEEN 2013 AND 2015
     AND sigla_uf = 'MG'
     AND etapa_ensino IN ('25', '30', '35', '26', '31', '36', '27', '32', '37')
     AND rede = 'estadual'
@@ -25,6 +25,9 @@ id_escolas_reinventando <- readRDS(file.path(dir_output, "id_escolas_reinventand
 # limiar principal e um mais frouxo
 limiar_min  <- 50
 limiar2_min <- 40
+
+# diferenca maxima (em minutos) para dizer que a 1a serie sai junto com a 2a e a 3a
+janela_min <- 5
 
 # =====================================================================
 # Objetivo: tabela descritiva das escolas estaduais de MG com Ensino
@@ -39,6 +42,9 @@ limiar2_min <- 40
 #   - mais de um horario de saida dentro da mesma serie e turno
 #     (so manha e tarde; o noturno fica de fora)
 #   - numero medio de turmas por serie (media entre escola x serie)
+# Segunda tabela, tambem so na amostra: em 2013, 2014 e 2015, quantas
+# escolas soltam a 1a serie junto (ate 5 min) com a 2a e a 3a series.
+# As duas tabelas vao para output/ em .xlsx e em .tex (main.tex le o .tex).
 # =====================================================================
 turmas <- censo %>%
   mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer)) %>%
@@ -73,7 +79,8 @@ cat("escolas do piloto com turma de EM em 2013:",
 # duracao da 1a serie: 2013 -> 2014, por escola x turno
 # -------------------------------------------------------------------
 duracao_1a <- turmas %>%
-  filter(serie == "1a", id_escola %in% escolas_amostra, !is.na(numero_duracao_turma)) %>%
+  filter(serie == "1a", ano %in% c(2013, 2014), id_escola %in% escolas_amostra,
+         !is.na(numero_duracao_turma)) %>%
   group_by(id_escola, turno, ano) %>%
   summarise(duracao_media = mean(numero_duracao_turma), .groups = "drop") %>%
   pivot_wider(names_from = ano, values_from = duracao_media, names_prefix = "duracao_") %>%
@@ -150,4 +157,58 @@ tabela <- tibble(
 
 print(tabela, width = Inf)
 
-writexl::write_xlsx(tabela, file.path(dir_output, "tabela_escolas_2013.xlsx"))
+# -------------------------------------------------------------------
+# tabela 2: 1a serie sai junto (ate 5 min) com a 2a e a 3a, 2013-2015
+# Por escola x ano x turno (manha e tarde): diferenca entre o horario
+# medio de saida da 1a serie e o da 2a e 3a series. A escola sai junto
+# no ano se a diferenca for de ate 5 min em pelo menos um turno.
+# -------------------------------------------------------------------
+saida_junto <- turmas %>%
+  filter(id_escola %in% escolas_amostra, turno %in% c("manha", "tarde"), !is.na(saida_min)) %>%
+  mutate(grupo = if_else(serie == "1a", "primeiro", "segundo_terceiro")) %>%
+  group_by(id_escola, ano, turno, grupo) %>%
+  summarise(saida_media = mean(saida_min), .groups = "drop") %>%
+  pivot_wider(names_from = grupo, values_from = saida_media) %>%
+  # so turnos com turma de 1a e de 2a/3a series no ano
+  filter(!is.na(primeiro), !is.na(segundo_terceiro)) %>%
+  mutate(junto = abs(primeiro - segundo_terceiro) <= janela_min) %>%
+  group_by(id_escola, ano) %>%
+  summarise(junto = any(junto), .groups = "drop")
+
+tabela_junto <- saida_junto %>%
+  group_by(ano) %>%
+  summarise(comparaveis = n(), junto = sum(junto), .groups = "drop") %>%
+  transmute(
+    Year = ano,
+    # comparaveis: com turma de 1a e de 2a/3a series no mesmo turno no ano
+    `Comparable schools` = comparaveis,
+    !!paste0("Release within ", janela_min, " min") := junto,
+    `%` = pct_amostra(junto)
+  )
+
+print(tabela_junto, width = Inf)
+
+writexl::write_xlsx(list(escolas_2013 = tabela, saida_junto = tabela_junto),
+                    file.path(dir_output, "tabela_escolas_2013.xlsx"))
+
+# -------------------------------------------------------------------
+# .tex das duas tabelas (so o tabular; legenda e notas ficam no main.tex)
+# -------------------------------------------------------------------
+# numero -> texto (milhar com virgula; NA vira celula vazia)
+fmt <- function(x, digitos = 0) {
+  ifelse(is.na(x), "", formatC(x, format = "f", digits = digitos, big.mark = ","))
+}
+
+tabela_tex <- tabela %>%
+  mutate(N   = c(fmt(head(N, -1)), fmt(tail(N, 1), 1)),
+         `%` = fmt(`%`, 1))
+
+tabela_junto_tex <- tabela_junto %>%
+  mutate(across(2:3, fmt), `%` = fmt(`%`, 1), Year = as.character(Year))
+
+writeLines(knitr::kable(tabela_tex, format = "latex", booktabs = TRUE, align = "lrr",
+                        linesep = ""),
+           file.path(dir_output, "tabela_escolas_2013.tex"))
+writeLines(knitr::kable(tabela_junto_tex, format = "latex", booktabs = TRUE, align = "lrrr",
+                        linesep = ""),
+           file.path(dir_output, "tabela_saida_junto.tex"))

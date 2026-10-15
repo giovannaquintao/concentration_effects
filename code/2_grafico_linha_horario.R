@@ -18,7 +18,8 @@ censo <- read_sql("
     AND rede = 'estadual'
 ")
 
-# amostra: todas as escolas estaduais de MG (nao filtra por amostra_id_escola.rds)
+# escolas do piloto do Reinventando (2012 e 2013), salvas em 0_escolas_reinventando.R
+id_escolas_reinventando <- readRDS(file.path(dir_output, "id_escolas_reinventando.rds"))
 
 # =====================================================================
 # Objetivo: como os horarios de SAIDA mais frequentes das turmas de
@@ -44,8 +45,15 @@ turmas_em <- censo %>%
       entrada_min <= 14 * 60 ~ "tarde",
       TRUE                   ~ "outro"
     )
-  ) %>%
-  filter(!is.na(saida_min))
+  )
+
+# amostra (mesma de 1_tabela_escolas_2013.R): escolas estaduais de MG com
+# turma de EM em 2013, sem as escolas do piloto
+escolas_amostra <- setdiff(unique(turmas_em$id_escola[turmas_em$ano == 2013]),
+                           id_escolas_reinventando)
+
+turmas_em <- turmas_em %>%
+  filter(id_escola %in% escolas_amostra, !is.na(saida_min))
 
 # serie -> sufixo do nome do arquivo
 arquivo_serie <- c("1st year of high school" = "1ano",
@@ -173,6 +181,6 @@ horarios_turno <- function(turno_sel, turno_en, subtitulo) {
 }
 
 horarios_turno("manha", "morning",
-               "Release time, % of classes starting before 12:00, state schools in Minas Gerais")
+               "Release time, % of classes starting before 12:00, sample schools")
 horarios_turno("tarde", "afternoon",
-               "Release time, % of classes starting between 12:00 and 14:00, state schools in Minas Gerais")
+               "Release time, % of classes starting between 12:00 and 14:00, sample schools")

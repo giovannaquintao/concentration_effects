@@ -1,0 +1,100 @@
+
+
+
+\begin{figure}[ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    var/.style={rectangle, rounded corners, draw=gray, thick, align=center,
+                text width=3.7cm, minimum height=1cm, font=\small,
+                execute at begin node={\hyphenpenalty=10000}},
+    main/.style={var, draw=black, very thick, fill=gray!10, text width=4cm},
+    mech/.style={var, draw=green!50!black, fill=green!5},
+    cvar/.style={var, draw=red!75!black, fill=red!4},
+    shock/.style={var, draw=blue!70!black, fill=blue!5},
+    effect/.style={-{Latex[length=3mm]}, very thick, green!50!black},
+    conf/.style={-{Latex[length=2.5mm]}, thick, red!75!black},
+    detect/.style={-{Latex[length=2.5mm]}, thick, dashed, orange!85!black},
+    iv/.style={-{Latex[length=3mm]}, very thick, blue!70!black},
+    threat/.style={-{Latex[length=2.5mm]}, thick, dashed, red!75!black},
+    link/.style={thick, red!75!black, {Latex[length=2.5mm]}-{Latex[length=2.5mm]}, dotted}
+]
+    % ---------------- treatment, outcome, source of variation ----------------
+    \node[main]  (conc)  at (0,0)
+        {\textbf{Concentration at release}\\1st, 2nd and 3rd years of EM
+         released together};
+    \node[main]  (crime) at (14,0)
+        {\textbf{Crime} by or against 2nd--3rd-year students after release};
+    \node[shock] (shock) at (-6,0)
+        {\textbf{2014 change}: 1st-year EM classes 50 min longer (one year
+         only)};
+
+    % ---------------- mechanisms (concentration) ----------------
+    \node[mech] (m1) at (7,6.0) {(1) More encounters, more conflict};
+    \node[mech] (m2) at (7,4.4) {(2) Weaker supervision per youth};
+    \node[mech] (m3) at (7,2.8) {(3) More targets in one place};
+    \node[mech] (m4) at (7,1.2) {(4) Crowd and group behaviour};
+    \node[var, draw=orange!85!black, fill=orange!5] (det) at (7,-1.5)
+        {(9) More police and witnesses: detection, not behaviour};
+
+    % ---------------- confounders ----------------
+    % row 1: direct confounders of concentration and crime
+    \node[cvar] (size)   at (-2.5,-4.6) {School size (few classes $\Rightarrow$ shared release)};
+    \node[cvar] (infra)  at (1.8,-4.6)  {Infrastructure (rooms, extra shifts)};
+    \node[cvar] (past)   at (6.1,-4.6)  {Past violence at the gate (reverse causality)};
+    \node[cvar] (sort)   at (10.4,-4.6) {Sorting of students (risk) into schools, shifts, classes};
+    \node[cvar] (nearby) at (15.2,-4.6) {Other schools releasing nearby};
+    % row 2: deeper causes
+    \node[cvar] (dense)  at (1.8,-7.6)  {Density and neighbourhood crime};
+    \node[cvar] (clock)  at (10.4,-7.6) {Time of day (parents at work, daylight, policing)};
+
+    % ---------------- source of variation ----------------
+    \draw[iv] (shock) -- (conc)
+        node[midway, below, font=\scriptsize, text=blue!70!black, align=center]
+        {own schedule\\unchanged};
+    \draw[threat] (shock.north) .. controls (-6,9) and (14,9) .. (crime.north)
+        node[pos=0.5, above, font=\scriptsize, text=red!75!black]
+        {1st-years leave later: their own crime changes (keep them out of the outcome)};
+
+    % ---------------- mechanisms ----------------
+    \foreach \m in {m1,m2,m3,m4} {
+        \draw[effect] (conc) -- (\m.west);
+        \draw[effect] (\m.east) -- (crime);
+    }
+    \draw[detect] (conc) -- (det.west);
+    \draw[detect] (det.east) -- (crime)
+        node[midway, below, font=\scriptsize, text=orange!85!black] {recorded crime};
+
+    % ---------------- confounder paths ----------------
+    \draw[conf] (size) -- (conc);
+    \draw[conf] (infra) -- (conc);
+    \draw[conf] (infra) -- (crime);
+    \draw[conf] (past) -- (conc);
+    \draw[conf] (past) -- (crime);
+    \draw[conf] (sort) -- (conc);
+    \draw[conf] (sort) -- (crime);
+    \draw[conf] (nearby) -- (crime);
+    % density: drives school size, nearby schools and crime
+    \draw[conf] (dense) -- (size);
+    \draw[conf] (dense.east) -- (nearby.south west);
+    \draw[conf] (dense.south) .. controls (2,-10.2) and (18.5,-10.2) .. (18.5,-3)
+        .. controls (18.5,-1) and (17.5,0) .. (crime.east);
+    % time of day
+    \draw[conf] (clock.east) .. controls (13.5,-7.6) and (14,-3) .. (crime.south);
+    \draw[link] (clock.south west) .. controls (6,-10.4) and (-6.5,-9) .. (conc.south west)
+        node[pos=0.3, below, font=\scriptsize, text=red!75!black]
+        {release time sets clock time};
+\end{tikzpicture}%
+}
+\caption{DAG for the effect of concentration at release on the crime of 2nd-
+and 3rd-year EM students. Green: concentration mechanisms (1)--(4), numbered as
+in the Mechanisms subsection. Orange dashed: detection (9), which raises
+recorded crime without changing behaviour. Red: confounders that open back
+doors between concentration and crime (school level, individual sorting, time
+of day). Blue: the 2014 change in 1st-year schedules, which moves concentration
+for 2nd- and 3rd-year students without changing their own schedule, so it
+closes the time-of-day and hours-in-school paths for them; the red dashed arc
+is its main threat. The peer mechanisms (5)--(8) are not in this graph: in
+this design the students exposed are older than those added to the crowd.}
+\label{fig:confounders}
+\end{figure}

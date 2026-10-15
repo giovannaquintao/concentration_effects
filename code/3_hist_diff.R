@@ -19,20 +19,25 @@ censo <- read_sql("
 # Objetivo: para cada escola, a diferenca entre o horario medio de SAIDA
 # das turmas de 1a serie do EM e o horario medio de saida das turmas de
 # 2a e 3a series, no turno da manha. Um histograma por ano (2013, 2014,
-# 2015). Escolas da amostra (01_amostra.R), sem as 19 escolas que ja
-# tinham atrasado a saida do 1o ano antes de 2014.
+# 2015). Amostra de 1_tabela_escolas_2013.R: escolas estaduais de MG com
+# turma de EM em 2013, sem as escolas do piloto do Reinventando.
 # =====================================================================
 
 # pasta output: funciona rodando de code/ ou da raiz do projeto
 dir_output <- if (dir.exists("../output")) "../output" else "output"
 
-amostra_id_escola <- readRDS(file.path(dir_output, "amostra_id_escola.rds"))
-antecipadas <- c(readRDS(file.path(dir_output, "id_mudou_50_2011_2012.rds")),
-                 readRDS(file.path(dir_output, "id_mudou_50_2012_2013.rds")))
+# escolas do piloto do Reinventando (2012 e 2013), salvas em 0_escolas_reinventando.R
+id_escolas_reinventando <- readRDS(file.path(dir_output, "id_escolas_reinventando.rds"))
 
 turmas <- censo %>%
-  filter(id_escola %in% amostra_id_escola, !id_escola %in% antecipadas) %>%
-  mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer)) %>%
+  mutate(across(c(ano, numero_duracao_turma, hora_inicial, minuto_inicial), as.integer))
+
+# amostra: escolas com turma de EM em 2013, sem o piloto
+escolas_amostra <- setdiff(unique(turmas$id_escola[turmas$ano == 2013]),
+                           id_escolas_reinventando)
+
+turmas <- turmas %>%
+  filter(id_escola %in% escolas_amostra) %>%
   mutate(
     serie = case_when(
       etapa_ensino %in% c("25", "30", "35") ~ "1a",
@@ -42,7 +47,7 @@ turmas <- censo %>%
     entrada_min = hora_inicial * 60L + minuto_inicial,
     saida_min   = entrada_min + numero_duracao_turma
   ) %>%
-  # turno da manha = entrada antes das 12:00 (mesma regra de 08_horarios_1em_2em.R)
+  # turno da manha = entrada antes das 12:00 (mesma regra de 2_grafico_linha_horario.R)
   filter(!is.na(saida_min), hora_inicial < 12)
 
 # horario medio de saida por escola x ano: 1a serie vs 2a e 3a series
@@ -67,6 +72,14 @@ diferencas %>%
             .groups = "drop") %>%
   print()
 
+# escolas fora do eixo do grafico (-30 a 80 min), por ano
+diferencas %>%
+  filter(diferenca_min < -30 | diferenca_min > 80) %>%
+  group_by(ano) %>%
+  summarise(fora_do_eixo = n(), diferencas = paste(round(sort(diferenca_min)), collapse = ", "),
+            .groups = "drop") %>%
+  print()
+
 # -------------------------------------------------------------------
 # histogramas (um painel por ano)
 # -------------------------------------------------------------------
@@ -80,8 +93,8 @@ g_hist <- ggplot(diferencas, aes(diferenca_min)) +
   geom_vline(xintercept = 0, colour = "#52514e", linewidth = 0.4, linetype = "dashed") +
   facet_wrap(~ano, ncol = 1, labeller = as_labeller(rotulos_ano)) +
   scale_x_continuous(breaks = seq(-30, 80, 10)) +
-  # eixo cortado em -30 a 80 min: 3 escolas em 2013 ficam de fora do
-  # grafico (diferencas de -120, -170 e -225 min), mas continuam na base
+  # eixo cortado em -30 a 80 min: as escolas fora do eixo (listadas acima)
+  # ficam de fora do grafico, mas continuam na base
   coord_cartesian(xlim = c(-30, 80)) +
   labs(
     title    = "Release time of 1st-year classes minus release time of 2nd- and 3rd-year classes",

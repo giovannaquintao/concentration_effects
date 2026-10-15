@@ -8,10 +8,414 @@
 \usepackage[authoryear,round]{natbib}
 \usepackage{indentfirst}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \graphicspath{{../output/}}
 \begin{document}
 
-\input{concentration_peer_effect}
+%==============================================
+\title{Concentration Effect in Youth Crime}
+\author{}
+\date{\today}
+\maketitle
+%==============================================
+
+Note: This is not written in a "paper tone", but more as a report to registry the reasoning and the data
+\section{Research question}
+
+\noindent Does the concentration of students leaving school at the same time
+affect crime in the short run?
+
+\paragraph{Reduced form.} Did the 2014 change in the schedule of 1st-year EM
+classes, which stopped them from leaving school at the same time as the 2nd
+and 3rd years, change crime by or against 2nd- and 3rd-year students after
+release, in schools that used to release all EM years together?
+
+ \section{Motivation}
+
+School reduces youth crime in two ways: it raises human capital in the long
+run \citep{lochner2004}, and it keeps students in a supervised environment, where they can not commit crime 
+(incapacitation). But school also brings young people
+together, generating networks. \citet{billings2019} studes the effect of school in formation of network using the redrawing of
+school boundaries in Charlotte-Mecklenburg in 2002. They find that one standard
+deviation more same-school, same-grade, same-race and same-gender peers living
+within 1 km raises the probability of arrest at ages 16--21 by 3.9 percentage
+points (23\%). Two students who live within 1 km of each other are 
+more likely to be arrested together (in the long-run) if they are assigned to the
+same school.
+
+Concentration can also raise crime in the short run, while students are
+together. The literature shows evidence of the concentration effects through variation in session-days and the
+type of crime. \citet{jacob2003} show that propery crime falls by 14\% on school days, but juvenile
+violent crime rises by 28\%, and the violent crime peaks at about 3 p.m.,
+when school lets out. The authors arugue that the fall in property crime is an evidence of incapacitation effects,
+ and the rise of violent crime is an effect of concentration.  \citet{luallen2006} follows the same line and shows that the
+property crime increases
+ and violent crime decreases on strike days. 
+
+
+I believe this is weak evidence of a concentration effect for some reasons.
+First, they identify only the net effect of incapacitation and concentration.
+The effect of school on violent crime is the sum of incapacitation ($-$) and
+concentration ($+$). Since the net effect is positive, concentration
+outweighs incapacitation for violent crime. The effect on property crime is the
+sum of incapacitation ($-$) and concentration, whose sign is unknown. If we
+assume it is non-negative, the negative net effect  means that
+incapacitation outweighs concentration for property crime. Under these sign
+assumptions, they identify only the lower bound of the concentration effect. 
+
+
+Second, the source of variation is a whole day without school, which changes
+substantially what students do during the day, not only how many other students
+they meet. The changes in property and violent crime can therefore reflect the
+different opportunities students face on an ``atypical'' day: the same student
+can change which crime they commit. For example, a student who would have
+fought at school (violent crime) may instead shoplift at a mall (property
+crime), because a free day leaves time to comute to the mall that is far away.
+ If students substitute across crimes in this way, the type of
+crime does not  identify whether incapacitation or concentration is at work. 
+
+Third (and less severe), although \citet{jacob2003} argue that the bias of school-reporting by 
+estimating the effect of non school hours crimes or crimes that occured out of schools, their effect decrease with their significance. 
+
+Separating concentration from incapacitation is hard. Any policy that changes
+when students leave school usually also changes how long they stay there, and
+so how much time they spend supervised. This paper uses a source of variation
+that changes concentration while keeping school and supervision fixed. 
+Two advantages of this paper: incapacitation is held fixed, concentration is measured, not inferred. 
+We could have a dose-response of the concetration of the youth (\textcolor{red}{check that, the first spec would be binary})
+
+
+Understanding the contemporaneous effect of concentration matters for two reasons:
+\begin{enumerate}
+  \item It is cheap to prevent. If shared release raises crime, staggering bell
+        times is a low-cost policy, unlike lengthening the school day or
+        reassigning students across schools.
+  \item It may feed the long-run effect. If crimes committed together after
+        school are where partnerships start, the short-run concentration effect
+        is one channel behind the networks documented by \citet{billings2019}. \citet{luallen2006} finds that juveniles who become repeat
+        offenders are more likely to commit their first crime on a strike day.
+\end{enumerate}
+
+
+ \section{Mechanisms}
+
+I can think of three mechanisms on which conecetration of youth can increase crime. First, is the numeric concentration of people, second the peer effect and 
+third the report. Each of these mechanisms operate in the different manner. 
+\begin{enumerate}
+      \item[A.] First, the number of people: how many young people are around.
+            A concentration of people can increase crime because:
+      \begin{enumerate}
+            \item there are more interactions, which can help youths
+                  coordinate crimes. \citet{jacob2003} find no evidence that
+                  school increases the coordination of crime: crimes with
+                  several offenders do not respond more to school days. We can
+                  test whether the number of crimes committed by more than one
+                  student increases.
+            \item there are more people who can fight each other. We can test
+                  this, but we cannot separate it from old rivalries (the peer
+                  effect below).
+            \item there is less adult supervision per youth (police, school
+                  staff, security guards on the street), as long as the police
+                  do not respond to the crowd.
+            \item more students can attract offenders, which increases crime
+                  against students. We can check whether the number of student
+                  victims increases.
+      \end{enumerate}
+      \item[B.] Second, the peer effect: .
+      \begin{enumerate}
+            \item \textbf{Learning.} Students can learn from other students.
+                  In our main specification, we are measuring the exposition of older students to
+                  younger ones so this channel may be weaker in our case. But we can test (long-shot) if there is an increase in crimes
+                   committed jointly with a prior offernder and a first-time offender.  Perhaps we do not have enough variation. 
+            \item \textbf{Recruitment.} If a 3rd-year
+                  student pulls 1st-year students into a theft, the 3rd-year
+                  student's own crime also increases, because they offend
+                  together. We can test this with crimes committed by mixed-grade
+                  groups.             
+            \item \textbf{Status.} Older students may act out/show off to
+                  impress younger ones. 
+            \item \textbf{Within student rivalries.} Students can fight because of their
+                  rivalries, including hazing of 1st-year students by older
+                  students. This predicts fights
+                 across grades, with older offenders and younger
+                  victims. We can test this. 
+      \end{enumerate}
+            \item[C.] Third, policing and reporting (I am not sure if we treat this as a mechanism or a confounder... )
+
+            \begin{itemize}
+                  \item \textbf{Reporting.} A crowd can change the share of
+                        crimes that reach the police, in either direction.
+                        It can decrease reporting:                       offenders are harder to identify in a crowd and
+                         each witness expects
+                        someone else to call
+                   Also, fights between students that would otherwise happen away from the school
+may happen at the school gate when students are released together. There, the
+school is more likely to handle them as a discipline matter, so they are less
+likely to be reported to the police.
+                         It can increase reporting: there are
+                        more witnesses and more phones to film or call.
+                  \item \textbf{More police.} When students leave together,
+                        the police can respond with more patrols at the school
+                        gate. This has two effects: more
+                        police can deter crime (a real change in
+                        behavior), and more police can detect more, 
+            \end{itemize}
+            We can test for these channels by checking whether, with shared
+            release:
+            \begin{enumerate}
+                  \item the average time between the crime and the arrival of
+                        the police (or the report) changes;
+                  \item the share of crimes in which the police are already at
+                        the scene, or arrest the offender in the act
+                        (\emph{flagrante}), increases;
+                  \item the share of incidents started by the police (patrol)
+                        rather than by a call from a victim or witness changes;
+                  \item serious crimes, which are reported whoever is watching
+                       , respond in the same way as
+                        minor crimes. If only minor crimes respond, the effect
+                        is more likely to come from reporting.
+            \end{enumerate}
+\end{enumerate}
+
+\section{Further analysis/Heterogenous}
+We can also investigate:
+\begin{enumerate}
+  \item \textbf{Displacement.} Does staggered release reduce crime, or only
+        shift it to other times and days? \citet{jacob2003} and \citet{luallen2006} find no temporal displacement of violent crime (leads and lags,
+        and weekly and monthly totals). We can run the same tests.
+  \item \textbf{Place.} Where does concentration-driven crime happen: at the
+        school gate, or along the routes between school and home?
+  \item \textbf{Type of crime.} Is the effect driven by fights between students
+        (assaults with young victims) or by property crime? Is it larger for
+        crimes with several juvenile offenders? \citet{jacob2003} find no
+        evidence that school helps juveniles coordinate crimes. \citet{billings2019} find that partnerships are common among older
+        youth.
+      \item Crime against students
+      \item Powered effect of concentration: if have two shifts in the smae school. The program makes students go earlier in the school in the afternoon shift (starts at \_)
+
+
+\end{enumerate}
+
+
+
+\section{Population of Study}
+
+\begin{itemize}
+  \item \textbf{Population.} Students in the 2nd and 3rd years of high school
+        (EM) in state schools in Minas Gerais that offer all three years of EM.
+  \item \textbf{Treatment.} The class is released at the same time as the
+        1st-year EM classes of the same school and shift. A continuous version
+        is the number of 1st-year students released within $X$ minutes of the
+        class.
+  \item \textbf{Outcome.} Crime committed by (and against) 2nd- and 3rd-year
+        students after release, near the school and in the minutes after the
+        bell.
+\item Level of analysis: school
+\end{itemize}
+
+\paragraph{Sample.} State schools in Minas Gerais with at least one 1st-, 2nd-
+or 3rd-year EM class in 2013, excluding the schools of the \emph{Reinventando o
+Ensino M\'edio} pilot (2012 and 2013). Table~\ref{tab:escolas_2013} describes
+the sample.
+
+\begin{table}[htbp]
+\centering
+\caption{State schools with high school (EM) in Minas Gerais, 2013.}
+\label{tab:escolas_2013}
+\input{../output/tabela_escolas_2013.tex}
+\par\medskip
+\begin{minipage}{0.9\textwidth}
+\footnotesize \emph{Notes:} Schools with at least one 1st-, 2nd- or 3rd-year
+EM class (regular, integrated or teacher training) in 2013. The sample excludes
+the schools of the \emph{Reinventando o Ensino M\'edio} pilot (2012 and 2013).
+Percentages are relative to the sample. Duration rows: change in the mean
+duration of 1st-year classes from 2013 to 2014 in at least one shift of the
+school; unchanged means the same mean duration in every shift with 1st-year
+classes in both years. Morning: classes starting before 12:00; afternoon:
+classes starting between 12:00 and 14:00. Release times are compared within the
+same grade and shift, morning and afternoon only. Average classes per grade:
+mean over school $\times$ grade.
+\end{minipage}
+\end{table}
+
+\section{Identification Strategy}
+
+\subsection{Motivation for the Identification Strategy}
+
+\paragraph{The naive comparison.} The simplest design compares schools that
+release the three EM years together with schools that release each year at a
+different time. But release times are not random, and this comparison is
+biased by confounders at three levels.
+
+\emph{School level.}
+\begin{itemize}
+  \item \textbf{Size and density.} Schools with fewer classes can release
+        everyone together, so shared release is more common in smaller schools.
+        Smaller schools are in less dense areas with less crime. This biases a
+        comparison of shared and non-shared schools towards finding that
+        concentration \emph{reduces} crime. The bias reverses if treatment is
+        measured as the \emph{number} of students released together, which is
+        larger in large schools located in dense areas.
+  \item \textbf{Infrastructure.} Staggered times often come from lack of rooms
+        or extra shifts, which are also related to school quality.
+  \item \textbf{Reverse causality.} Principals may stagger release
+        \emph{because} of fights at the gate, so treatment responds to past
+        violence.
+  \item \textbf{Nearby schools.} Other schools releasing at the same time add
+        to concentration, and their students may also be affected.
+\end{itemize}
+
+\emph{Individual level.}
+\begin{itemize}
+  \item \textbf{Sorting into schools.} Families choose schools, so students in
+        small schools with shared release differ from students in large
+        schools (income, distance from home, prior behavior).
+  \item \textbf{Sorting into shifts and classes.} Schools assign students to
+        shifts and classes by age, repetition, behavior or work status. If
+        some classes are released at different times, the students in them may
+        differ in their risk of crime.
+\end{itemize}
+
+\emph{Time of day.} A different release time is a different clock time, with
+different parental supervision, daylight, policing and street activity.
+
+\paragraph{A source of variation: the 2014 change in 1st-year schedules.} In
+2014, 1st-year EM classes in state schools in Minas Gerais became about
+50 minutes longer, for that year only (probably the sixth period of
+\emph{Reinventando o Ensino M\'edio}; to be confirmed). Morning 1st-year classes
+moved their release from 11:20--11:30 to about 12:10--12:20, and afternoon
+classes from 17:00--17:30 to 17:50--18:20. Start times did not change, and
+most 2nd- and 3rd-year classes kept their schedule, leaving at 11:20--11:30 and
+17:00--17:30. In 2015 the 1st year went back to its previous schedule.
+
+For a 2nd- or 3rd-year student in a school that released all EM years
+together, this means:
+\begin{itemize}
+  \item \textbf{Concentration falls in 2014 and returns in 2015.} The 1st-year
+        students no longer leave with them in 2014, and leave with them again
+        in 2015.
+  \item \textbf{Their own schedule is unchanged.} Start time, class duration
+        and release time are the same, so incapacitation (hours in school,
+        free time) and clock time are held fixed \emph{for the treated
+        students}.
+  \item \textbf{The change is set by the state, not by the school.} It does not
+        respond to violence at a particular school's gate.
+\end{itemize}
+
+\paragraph{Design.} Compare 2nd- and 3rd-year students in schools that shared
+release with the 1st year before 2014 (treated: sharing stops in 2014 and
+returns in 2015) with students in schools that did not share release (control:
+no change), in 2012--2016. The reversal in 2015 is a second test: if crime
+falls in 2014 because of lower concentration, it should rise again in 2015.
+
+\begin{itemize}
+  \item \textbf{Comparison:} treated vs control schools, before, during and
+        after 2014.
+  \item \textbf{Unit:} 2nd- and 3rd-year class (or school $\times$ shift)
+        $\times$ year.
+  \item \textbf{Fixed effects:} school $\times$ shift and year.
+  \item \textbf{Identifying assumption:} without the 2014 change, crime around
+        the release of 2nd- and 3rd-year students would have evolved in
+        parallel in treated and control schools; and the 2014 change affected
+        these students only through the number of students released with
+        them.
+\end{itemize}
+
+\paragraph{Threats.}
+\begin{itemize}
+  \item \textbf{Treated and control schools differ.} Schools that shared
+        release are smaller (see above). Fixed effects absorb level
+        differences, but not different trends. Check pre-trends in 2010--2013.
+  \item \textbf{The 1st-year students also change.} In 2014 they leave later
+        and spend more time in school, so their own crime changes. The outcome
+        must be crime by (or against) 2nd- and 3rd-year students, not all
+        youth crime near the school.
+  \item \textbf{Other changes in 2014.} The policy may have come with other
+        changes at the school (activities, staff) that affect all students. In
+        addition, Belo Horizonte hosted World Cup matches in June--July 2014,
+        with changes to the school calendar and heavy policing, and 2014 was an
+        election year. Year fixed effects absorb what is common to all
+        schools, but not effects that differ between treated and control
+        schools.
+  \item \textbf{Some 2nd-year classes also change.} The 3rd-year schedule does
+        not change in 2014, but a small share of 2nd-year classes also leaves
+        later that year (Figures~\ref{fig:em_series_manha}
+        and~\ref{fig:em_series_tarde}). For these classes, the students' own
+        release time changes too.
+  \item \textbf{Compliance.} Not all schools changed the 1st-year schedule in
+        2014 (Tables~\ref{tab:escolas_2013} and~\ref{tab:saida_junto}). Use the
+        observed change in each school's schedule, not just the year.
+\end{itemize}
+
+\paragraph{Descriptive evidence on the 2014 change.} Figure~\ref{fig:tratados}
+counts the schools whose main 1st-year morning release time moved 50 minutes or
+more later than in the previous year. The change is concentrated in 2014: 170
+of 247 schools (69\%). A few schools made the same change in earlier years: 8 from 2011 to 2012 and
+11 from 2012 to 2013;
+they may have adopted the change before the rest of the network. These 19
+schools are dropped from Figures~\ref{fig:horarios_manha}
+and~\ref{fig:horarios_tarde}, so the remaining schools are all untreated before
+2014.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{tratados_saida_1em_manha.png}
+\caption{Schools whose main 1st-year EM release time in the morning shift moved
+50 minutes or more later than in the previous year. Bar height: share of the
+sample schools with 1st-year morning classes in both years; number on the bar:
+number of schools.}
+\label{fig:tratados}
+\end{figure}
+
+Figure~\ref{fig:horarios_manha} shows that, in the morning, 1st-year classes
+moved from 11:20--11:30 to 12:15--12:20 in 2014 only, while 2nd-year classes
+kept leaving at 11:20--11:30. Figure~\ref{fig:horarios_tarde} shows that, in the
+afternoon, some schools moved the start time earlier in 2014 (from 13:00 to
+12:30). This happens for the 2nd year as well as the 1st, so in the afternoon
+the 2014 change does not leave the 2nd-year schedule unchanged in every school.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{horarios_em2_sem_antecipadas_manha_mapa.png}
+\caption{Release time of 1st- and 2nd-year EM classes in the morning shift
+(classes starting before 12:00), \% of classes by year. Sample state schools,
+excluding the 19 schools that delayed 1st-year release before 2014.}
+\label{fig:horarios_manha}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{horarios_em2_sem_antecipadas_tarde_entrada_mapa.png}
+\caption{Start time of 1st- and 2nd-year EM classes in the afternoon shift
+(classes starting between 12:00 and 14:00), \% of classes by year. Sample state
+schools, excluding the 19 schools that delayed 1st-year release before 2014.}
+\label{fig:horarios_tarde}
+\end{figure}
+
+Figure~\ref{fig:hist_diff} compares, within each school, the release time of
+the 1st year with that of the 2nd and 3rd years in the morning shift. In 2013
+and 2015 almost every school releases all EM years at the same time (difference
+of zero). In 2014 most schools release the 1st year about 50 minutes after the
+2nd and 3rd years: the median difference is 50 minutes, and 163 of 224 schools
+have a difference of 40 minutes or more. Only 37 schools keep releasing all
+years together in 2014.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{hist_diff_saida_1em_manha.png}
+\caption{Difference, in each school, between the mean release time of 1st-year
+EM classes and the mean release time of 2nd- and 3rd-year EM classes, morning
+shift (classes starting before 12:00), in 2013, 2014 and 2015. Positive values:
+the 1st year leaves later. Sample state schools with both 1st-year and
+2nd- or 3rd-year morning classes in the year. \textbf{Note:} the 19 schools that
+delayed 1st-year release by 50 minutes or more before 2014 (8 from 2011 to 2012
+and 11 from 2012 to 2013) are excluded. The horizontal axis is cut at $-30$ and $80$ minutes, which
+leaves out 3 schools in 2013 (differences of $-120$, $-170$ and $-225$ minutes).}
+\label{fig:hist_diff}
+\end{figure}
+
+
+
 
 \section{Release times by EM grade}
 
@@ -42,16 +446,107 @@ axis are used in the three graphs; less frequent times are grouped as Other.}
 \end{figure}
 
 
-Fazer event sstudy: time of crime after school release time (X) Y probability of crime (student level)
-Problem: report of policy
-Problem: more people around; more policy
 
-Mechanisms: 
+\subsection{Other Sources of variations}
 
-Do the DAG
+\medskip
+\noindent\textbf{(a) ``RCT'' within school, class level.}
 
-Tres histograma: diferenca media do horario de saida das classes do primeiro ano em relacao ao segundo e terceiro ano. 
-Escola X = 
+\noindent\textbf{Level.} Class
+ \noindent\textbf{Treatment.} Shared release time with 10th grade
+\noindent\textbf{Sample.} Cell = school $\times$ shift $\times$ year
+$\times$ class duration. Cells with at least two 9th-grade classes, at
+least one released at a time shared with 10th grade and at least one
+released at a time not shared with 10th grade. Treated and control
+classes have the same duration.
+
+\noindent\textbf{Estimator.} Simple difference in means: 
+\begin{equation}
+  \hat\beta = \sum_{s} w_s \Big(\overline{V}^{\text{shared}}_{s}
+  - \overline{V}^{\text{not shared}}_{s}\Big)
+\end{equation}
+Equivalent
+regression, with $\alpha_s$ a cell fixed effect:
+\begin{equation}
+  V_{cs} = \alpha_s + \beta\, \text{Shared}_{cs} + \varepsilon_{cs}
+\end{equation}
+
+\noindent\textbf{Identifying assumption.} Inside a cell, which class gets
+the shared release time is as good as random: students in shared and not
+shared classes of the same school, shift and year have the same potential
+outcomes. School-level confounders (size, density, neighborhood) and shift
+selection are fixed by construction.
+
+\noindent\textbf{Confounders.} 
+\begin{itemize}
+\item Confounder: the school chooses which class goes to which time
+(e.g.\ older or more ``difficult'' students placed together).
+\item Confounder: with the same class duration, a different release time
+means a different start time, so clock time (start and release) still
+differs between treated and control. Time in school does not.
+\end{itemize}
+
+
+\noindent\textbf{(b) TWFE --- between schools \& within schools across
+time, not-yet-treated control.}
+\noindent\textbf{Level.} School.
+ \noindent\textbf{Treatment.} school $s$ goes from some
+shared release time with high school to zero shared release time.
+Control: school $m$ still has some shared release time in both periods
+(not-yet-treated).
+Restriction: the shift of the 9th grade does not change between $t-1$
+and $t$; the shift of high school can change.
+\begin{equation}
+  \hat\beta_{DD} = \big(\overline{V}_{s,t} - \overline{V}_{s,t-1}\big)
+  - \big(\overline{V}_{m,t} - \overline{V}_{m,t-1}\big)
+\end{equation}
+$\overline{V}_{s,t}$ = average violence among 9th-grade students at school
+$s$ in year $t$.
+
+\begin{itemize}
+\item Confounder:
+ change in class-time attract more violent students for 9th grade.
+\end{itemize}
+
+\medskip
+\noindent\textbf{(c) Dif-dif, school-shift level.}
+\noindent\textbf{Level.} School $\times$ shift (morning/afternoon).
+\begin{equation}
+  \hat\beta_{DD} = \Big[\overline{V}^{\text{morning}}_{\text{shared}}
+  - \overline{V}^{\text{morning}}_{\text{not shared}}\Big]
+  - \Big[\overline{V}^{\text{afternoon}}_{\text{shared}}
+  - \overline{V}^{\text{afternoon}}_{\text{not shared}}\Big]
+\end{equation}
+$\overline{V}^{\text{shift}}_{\text{shared}}$ = average violence among
+9th-grade cohorts in that shift whose release time coincides with high
+school's; $\overline{V}^{\text{shift}}_{\text{not shared}}$ = same, for
+cohorts whose release time does not coincide.
+
+\medskip
+\noindent\textbf{(d) TWFE, student level.}
+\noindent\textbf{Level.} Student, across their own grade progression (8th
+$\to$ 9th). Student $m$ is a within-cohort control whose shared-release
+status does not change from 8th to 9th grade.
+\begin{equation}
+  \hat\beta_{DD} = \big(Y_{s,\text{9th}} - Y_{s,\text{8th}}\big)
+  - \big(Y_{m,\text{9th}} - Y_{m,\text{8th}}\big)
+\end{equation}
+$Y_{i,g}$ = violence outcome for student $i$ in grade $g$; $s$ = student
+whose shared-release status changes moving from 8th to 9th grade; $m$ =
+student whose shared-release status stays the same across both grades.
+
+
+
+\subsection{Other effects}
+
+\begin{itemize}
+\item Other schools near. Affect in other schools
+\item Problem: other schools can affect
+\end{itemize}
+
+
+
+
 
 \bibliographystyle{aer}
 \bibliography{references}
