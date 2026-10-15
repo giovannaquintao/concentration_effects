@@ -1,0 +1,26 @@
+\ifx\undefined\bysame
+\newcommand{\bysame}{\leavevmode\hbox to\leftmargin{\hrulefill\,\,}}
+\fi
+\begin{thebibliography}{xx}
+
+\harvarditem[Billings et al.]{Billings, Deming and Ross}{2019}{billings2019}
+{\bf Billings, Stephen~B., David~J. Deming, and Stephen~L. Ross}, ``Partners in
+  Crime,'' {\it American Economic Journal: Applied Economics}, 2019, {\it 11}
+  (1), 126--150.
+
+\harvarditem[Jacob and Lefgren]{Jacob and Lefgren}{2003}{jacob2003}
+{\bf Jacob, Brian~A. and Lars Lefgren}, ``Are Idle Hands the Devil's Workshop?
+  {I}ncapacitation, Concentration, and Juvenile Crime,'' {\it American Economic
+  Review}, 2003, {\it 93} (5), 1560--1577.
+
+\harvarditem[Lochner and Moretti]{Lochner and Moretti}{2004}{lochner2004}
+{\bf Lochner, Lance and Enrico Moretti}, ``The Effect of Education on Crime:
+  Evidence from Prison Inmates, Arrests, and Self-Reports,'' {\it American
+  Economic Review}, 2004, {\it 94} (1), 155--189.
+
+\harvarditem[Luallen]{Luallen}{2006}{luallen2006}
+{\bf Luallen, Jeremy}, ``School's Out\ldots Forever: A Study of Juvenile Crime,
+  At-Risk Youths and Teacher Strikes,'' {\it Journal of Urban Economics}, 2006,
+  {\it 59} (1), 75--103.
+
+\end{thebibliography}
